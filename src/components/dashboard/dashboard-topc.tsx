@@ -4,7 +4,9 @@ import { useFixedBalance } from '../account/fixed-data-balance' // ajuste o cami
 import { Button } from '@/components/ui/button'
 import { RefreshCw } from 'lucide-react'
 import Image from 'next/image'
-import Coin from "../ui/coin"
+
+
+
 interface TopContProps {
   refreshTrigger?: any // opcional, se quiser atualizar de fora
 }
@@ -18,7 +20,6 @@ const TopCont: React.FC<TopContProps> = ({ refreshTrigger }) => {
   }, [refreshTrigger])
 
   return (<>
-            <Coin />
     <div className="grid grid-rows-2 h-30 w-full rounded-md justify-items-center items-center text-2xl text-center gap-2">
       <div>
         {balance !== undefined && !isLoading && !error && (
@@ -27,7 +28,6 @@ const TopCont: React.FC<TopContProps> = ({ refreshTrigger }) => {
             <Image src="/solanaLogoMark.svg" alt="Solana Logo" width={20} height={20} />
           </div>
         )}
-        {/* Botão para atualizar manualmente */}
         <Button
           variant="outline"
           onClick={() => refetch()}

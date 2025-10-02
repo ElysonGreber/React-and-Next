@@ -4,6 +4,7 @@ import { useWallet } from '@solana/wallet-adapter-react'
 import { connection, sendInstruction, readPda } from './solanaHelper'
 import { LAMPORTS_PER_SOL } from '@solana/web3.js'
 import { useToaster } from '../app-toaster'
+import {BentoG} from './bentoG'
 import TopCont from './dashboard-topc'
 import BOTCont from './dashboard-bot'
 import ArmsRL from './armsRL.svg'
@@ -202,14 +203,20 @@ export default function DashboardFeature() {
                     >
                       Próximo
                     </button>
+                    
                   </div>
+                  <BentoG />
+                 
                 </>
               )}
             </div>
+             <BOTCont />
           </div>
+          
         )}
       </div>
-      <BOTCont />
+      
+
       {toast}
     </div>
   )
