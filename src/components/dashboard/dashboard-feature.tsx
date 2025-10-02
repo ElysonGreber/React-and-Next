@@ -5,6 +5,7 @@ import { connection, sendInstruction, readPda } from './solanaHelper'
 import { LAMPORTS_PER_SOL } from '@solana/web3.js'
 import { useToaster } from '../app-toaster'
 import TopCont from './dashboard-topc'
+import BOTCont from './dashboard-bot'
 import ArmsRL from './armsRL.svg'
 import ArmsPL from './armsPL.svg'
 import ArmsSL from './armsSL.svg'
@@ -208,6 +209,7 @@ export default function DashboardFeature() {
           </div>
         )}
       </div>
+      <BOTCont />
       {toast}
     </div>
   )

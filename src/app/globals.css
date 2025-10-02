@@ -39,6 +39,18 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  --animate-shine: shine var(--duration) infinite linear;
+  @keyframes shine {
+  0% {
+    background-position: 0% 0%;
+    }
+  50% {
+    background-position: 100% 100%;
+    }
+  to {
+    background-position: 0% 0%;
+    }
+  }
 }
 
 :root {
@@ -133,7 +145,7 @@
 
 .sl0{
   background-image: url(https://assets.codepen.io/3685267/betting-app-wccettuo.png);
-  
+
 }
 .sl1{
   background-image: 
@@ -147,8 +159,6 @@
   background-image: url(https://assets.codepen.io/3685267/betting-app-ahiryyst.png);
 }
 
-
-
 .sidebar-circ{
 
 background: #3A3A3A;
@@ -160,14 +170,14 @@ box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
 .menu-item-main{
   background: #151515;
   cursor: pointer;
- 
+
 }
 .menu-item-main:hover{
   background: linear-gradient(176.15deg, #2F2F2F 2.85%, #292929 104.97%);
 }
 
 .menu-item-main:hover .menu-item-main-icon{
- 
+
 background: linear-gradient(180deg, #E4A704 0%, #FE7A00 100%);
 color: #222;
 border: none;
@@ -179,31 +189,24 @@ border: none;
  border: 1px solid #444;
 }
 
-
-
 .plus-circ{
 background: linear-gradient(180deg, #E4A704 0%, #FE7A00 100%);
 color: #373739;
 }
 
-
 .profile-sec{
   background: linear-gradient(180deg, #353535 0%, #222222 100%);
 }
 
-
 .profile-img-container{
   background: linear-gradient(180deg, #E4A704 0%, #FE7A00 100%);
 }
-
 
 .gen-chat{
       background: linear-gradient(to bottom, #E4A704, #FE7A00);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
 }
-
-
 
 .chat-header-cover{
   background: rgba(34, 34, 34, 0.7);
@@ -212,19 +215,16 @@ border-top-left-radius: 24px;
 border-top-right-radius: 24px;
 }
 
-
 .menu-item-with-icon{
    opacity: 0;
   transform: scale(1);
   transition: opacity 0.3s ease-out, transform 0.3s ease-out;
 }
 
-
 .menu-item-main:hover .menu-item-with-icon{
    opacity: 1;
   transform: scale(1.3);
 }
-
 
 .menu-item-with-image{
    opacity: 0;
@@ -239,7 +239,6 @@ border-top-right-radius: 24px;
   transform: scale(3.1);
 }
 
-
 .animated-swiper-item{
   transform: scale(1);
   transition: transform 0.3s ease-out;
@@ -249,7 +248,6 @@ border-top-right-radius: 24px;
   cursor: pointer;
 
 }
-
 
 .yellow-gradient-1{
   background: linear-gradient(180deg, #FFBE28 0%, #FF7C00 100%);
@@ -272,7 +270,15 @@ border-top-right-radius: 24px;
   background-color: #222222;
 }
 
-
+.custom-shadow-blue{
+  box-shadow: 0px 0px 27px -2px rgb(85 164 255 / 58%);
+}
+.custom-shadow-yellow{
+  box-shadow: 0 0 27px -2px rgb(254 184 0 / 67%);
+}
+.custom-shadow-green{
+  box-shadow: 0 0 27px -2px rgb(37 222 119 / 67%);
+}
 
 .titem{
   height: 112px;
@@ -295,7 +301,7 @@ border-top-right-radius: 24px;
   box-shadow: 0px 0px 0px 5px rgba(0,0,0,1) inset;
   scale: 1.05;
   transition: opacity 0.3s ease-out, transform 0.3s ease-out;
-  
+
 }
 .bggrad{
   background-image: linear-gradient( cyan, transparent),linear-gradient(-45deg, magenta,transparent),linear-gradient( 45deg, yellow, transparent);  
@@ -329,4 +335,35 @@ border-top-right-radius: 24px;
 
 .rotate-y-180 {
   transform: rotateY(180deg);
+}
+
+/* Base mobile-first: telas menores */
+.btngame {
+  width: 12rem;   /* 192px */
+height: auto;
+  border-radius: 2rem;
+}
+
+/* >= 640px (sm - tablet pequeno) */
+@media (min-width: 40rem) {
+  .btngame {
+    width: 16rem;   /* 256px */
+height: auto;
+  }
+}
+
+/* >= 768px (md - tablet maior) */
+@media (min-width: 48rem) {
+  .btngame {
+    width: 18rem;   /* 288px */
+height: auto;
+  }
+}
+
+/* >= 1024px (lg - desktop) */
+@media (min-width: 64rem) {
+  .btngame {
+    width: 18rem;   /* 350px */
+height: auto;
+  }
 }
