@@ -4,9 +4,10 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Menu, X } from 'lucide-react'
-import { ThemeSelect } from '@/components/theme-select'
+// import { ThemeSelect } from '@/components/theme-select'
 import { ClusterUiSelect } from './cluster/cluster-ui'
 import { WalletButton } from '@/components/solana/solana-provider'
+import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem} from "@heroui/react";
 
 export function AppHeader({ links = [] }: { links: { label: string; path: string }[] }) {
   const pathname = usePathname()
@@ -17,6 +18,7 @@ export function AppHeader({ links = [] }: { links: { label: string; path: string
   }
 
   return (
+    
     <header className="relative z-50 px-4 py-2 bg-neutral-100 dark:bg-neutral-900 dark:text-neutral-400">
       <div className="mx-auto flex justify-between items-center">
         <div className="flex items-baseline gap-4">
@@ -46,7 +48,7 @@ export function AppHeader({ links = [] }: { links: { label: string; path: string
         <div className="hidden md:flex items-center gap-4">
           <WalletButton />
           <ClusterUiSelect />
-          <ThemeSelect />
+          {/* <ThemeSelect /> */}
         </div>
 
         {showMenu && (
@@ -66,9 +68,11 @@ export function AppHeader({ links = [] }: { links: { label: string; path: string
                 ))}
               </ul>
               <div className="flex flex-col gap-4">
+                
                 <WalletButton />
                 <ClusterUiSelect />
-                <ThemeSelect />
+                
+                {/* <ThemeSelect /> */}
               </div>
             </div>
           </div>

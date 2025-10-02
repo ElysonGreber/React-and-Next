@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css?family=Sanchez');
+
+
+.wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  scale: 0.5;
+}
+
+.container {
+  width: 10em;
+  height: 10em;
+  position: relative;
+  perspective: 300px;
+  box-shadow: 0 11em 3em -2em rgba(0, 0, 0, 0.2);
+  margin: 2em;
+  transform: translateZ(-0.4em);
+}
+
+.coin {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  transform-style: preserve-3d;
+}
+
+.euro {
+  --face: #7c005b;
+  --sign: #7c005b;
+  --circle: hsl(329, 74%, 10%);
+  --side: #7c005b;
+  --slide: #7c005b;
+  animation: spinEuro 18s -3s linear infinite;
+}
+
+.face {
+  border-radius: 5em;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  background-image: url(https://raw.githubusercontent.com/ElysonGreber/TOKEPO/refs/heads/main/tklg.png);
+  background-size: cover;
+  background-color:rgba(21, 1, 29, 0);
+}
+
+.front {
+  transform: translate3d(0, 0, 0.4em) rotateY(0);
+}
+
+.back {
+  transform: rotateY(180deg) translate3d(0, 0, 0.4em);
+}
+
+.symbol {
+  position: absolute;
+  color: var(--sign);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 5em;
+  font-family: Sanchez, sans-serif;
+}
+
+.euro .symbol {
+  padding-right: 0.1em;
+}
+
+.circle {
+  border-radius: 5em;
+  border: 0.35em dashed var(--circle);
+  width: 8em;
+  height: 8em;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
+
+.side {
+  width: 0.8em;
+  height: 1.61em;
+  background: var(--side);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  backface-visibility: hidden;
+  border-top: 0.2em solid var(--slide);
+  border-bottom: 0.2em solid var(--slide);
+}
+
+@keyframes spinEuro {
+  0% {
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  }
+  50% {
+    transform: rotateX(1800deg) rotateY(45deg) rotateZ(25deg);
+  }
+  100% {
+    transform: rotateX(3600deg) rotateY(0deg) rotateZ(0deg);
+  }
+}
