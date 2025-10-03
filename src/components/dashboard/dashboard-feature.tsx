@@ -4,7 +4,7 @@ import { useWallet } from '@solana/wallet-adapter-react'
 import { connection, sendInstruction, readPda } from './solanaHelper'
 import { LAMPORTS_PER_SOL } from '@solana/web3.js'
 import { useToaster } from '../app-toaster'
-import {BentoG} from './bentoG'
+import { BentoG } from './bentoG'
 import TopCont from './dashboard-topc'
 import BOTCont from './dashboard-bot'
 import ArmsRL from './armsRL.svg'
@@ -59,6 +59,7 @@ export default function DashboardFeature() {
       await fetchGameData()
       setTxLogs(logs)
       showToast({ type: 1, title: 'Sucesso', message: `Créditos comprados! Tx: ${signature}` })
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       console.error(err)
       showToast({ type: 2, title: 'Erro', message: err.message || 'Erro ao comprar créditos' })
@@ -72,12 +73,13 @@ export default function DashboardFeature() {
       await fetchGameData()
       setTxLogs(logs)
       showToast({ type: 1, title: 'Jogada realizada', message: `Tx: ${signature}` })
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       console.error(err)
       showToast({ type: 2, title: 'Erro', message: err.message || 'Erro ao jogar' })
     }
   }
-  const renderResult = (result: number) => (result === 0 ? '❌ Derrota' : result === 1 ? '➖ Empate' : '✅ Vitória')
+  const renderResult = (result: number) => (result === 0 ? '❌ Loss' : result === 1 ? '➖ Won' : '✅ Victory')
   const sortedHistory = [...history].reverse()
   const indexOfLast = currentPage * itemsPerPage
   const indexOfFirst = indexOfLast - itemsPerPage
@@ -86,18 +88,28 @@ export default function DashboardFeature() {
   return (
     <div>
       <div className="chat-header-cover bg-[#1b1b1b] border-b-2 border-b-zinc-800 custom-shadow-2 p-6 max-w-5xl mx-auto space-y-6">
-        <div className="flex justify-center">
-          <TopCont />
-        </div>
+        <TopCont />
         {wallet.connected && (
           <div className="space-y-8">
-            <button onClick={handleBuyCredit} className="px-6 py-2 cpm text-white rounded-lg bgbtn transition">
+            
+            <div className="flex-1 text-center font-bold space-x-1 ">{solBalance.toFixed(4)} SOL</div>
+            <div className="flex items-center space-x-5">
+              <div className="flex-1 m-0 text-center align-middle text-black font-bold h-30 w-full bg-amber-400 rounded-3xl">
+                Level
+              </div>
+              <p className="flex-1 m-0 text-center text-black font-bold h-30 w-full bg-blue-400 rounded-3xl custom-shadow-2">
+                Credits: {credits}
+              </p>
+              <p className="flex-1 m-0 text-center text-black font-bold h-30 w-full bg-green-400 rounded-3xl custom-shadow-2">
+                Score {score}
+              </p>
+            </div>
+            <button onClick={handleBuyCredit} className=" cpm text-white rounded-lg bgbtn transition w-full custom-shadow-2">
               Buy 5 Credits (0.01 SOL)
             </button>
-            {/* Jogadas */}
-            <div className="text-center space-y-4">
+            <div className="text-center space-x-4">
               <h3 className="font-semibold text-gray-700">Escolha sua jogada:</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-3 justify-center gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 justify-center gap-4 display-none invisible ">
                 <button
                   onClick={() => handlePlay(0)}
                   className="flex-1 h-50 px-4 py-2 bg-yellow-300 border-8 border-white btnsdc rounded-lg overflow-hidden transition"
@@ -105,7 +117,7 @@ export default function DashboardFeature() {
                   <Image
                     className="relative -left-10 object-contain"
                     src={ArmsRL}
-                    alt="Pedra"
+                    alt="Rock"
                     width={350}
                     height={350}
                   />
@@ -117,7 +129,7 @@ export default function DashboardFeature() {
                   <Image
                     className="relative -left-10 object-contain"
                     src={ArmsPL}
-                    alt="Pedra"
+                    alt="Paper"
                     width={350}
                     height={350}
                   />
@@ -129,7 +141,7 @@ export default function DashboardFeature() {
                   <Image
                     className="relative -left-10 object-contain"
                     src={ArmsSL}
-                    alt="Pedra"
+                    alt="Scissor"
                     width={350}
                     height={350}
                   />
@@ -137,9 +149,9 @@ export default function DashboardFeature() {
               </div>
             </div>
             <div className="bg-[#222222] rounded-xl shadow p-4">
-              <h3 className="font-semibold mb-2 text-gray-700 gen-chat">Histórico</h3>
+              <h3 className="font-semibold mb-2 text-gray-700 gen-chat">Jorney</h3>
               {history.length === 0 ? (
-                <p className="text-gray-500 text-sm">Nenhuma partida registrada ainda.</p>
+                <p className="text-gray-500 text-sm">First Play</p>
               ) : (
                 <>
                   <div className="overflow-x-auto">
@@ -195,19 +207,15 @@ export default function DashboardFeature() {
                     >
                       Próximo
                     </button>
-                    
                   </div>
                   <BentoG />
-                 
                 </>
               )}
             </div>
-             <BOTCont />
+            <BOTCont />
           </div>
-          
         )}
       </div>
-      
 
       {toast}
     </div>

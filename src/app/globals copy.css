@@ -507,8 +507,3 @@ background-clip: text;
     }
 }
 
-.bgpattern{
-height: auto;
-    background-image: url(/BGpatternGD.svg);
-    background-size: 15rem;
-}

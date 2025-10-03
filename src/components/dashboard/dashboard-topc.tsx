@@ -4,7 +4,7 @@ import { useFixedBalance } from '../account/fixed-data-balance' // ajuste o cami
 import Image from 'next/image'
 
 interface TopContProps {
-  refreshTrigger?: any // opcional, se quiser atualizar de fora
+  refreshTrigger?: unknown // opcional, se quiser atualizar de fora
 }
 
 const TopCont: React.FC<TopContProps> = ({ refreshTrigger }) => {
@@ -12,23 +12,23 @@ const TopCont: React.FC<TopContProps> = ({ refreshTrigger }) => {
 
   useEffect(() => {
     if (refreshTrigger) refetch()
-  }, [refreshTrigger])
+  }, [refetch, refreshTrigger])
 
-  return (<>
-    <div className="grid grid-rows-2 h-30 w-full rounded-md justify-items-center items-center text-2xl text-center gap-2">
-      <div>
+  return (
+    <div className="grid h-50 w-full rounded-md justify-items-center items-center text-2xl text-center gap-2 bgpattern">
+      <div className="mt-5">
         {balance !== undefined && !isLoading && !error && (
-          <div className="flex items-center gap-2">
-            <span>Prize Pool: {balance.toFixed(2)}</span>
-            <Image src="/solanaLogoMark.svg" alt="Solana Logo" width={20} height={20} />
+          <div className="grid-cols-1 items-center gap-2">
+            <div>
+              <span className="text-4xl bold text-amber-200 ">Prize Pool</span>
+            </div>
+            <div className=" flex items-center justify-center">
+              <span className=" text-7xl ggradgreen">{balance.toFixed(2)}</span>
+              <Image className="ml-2" src="/solanaLogoMark.svg" alt="Solana Logo" width={52} height={52} />
+            </div>
           </div>
         )}
-        <Button
-          variant="outline"
-          onClick={() => refetch()}
-          className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
-          <RefreshCw size={16} />
-        </Button>
+        <Image className="p-0 mt-5 inline" src="/Gem.png" loading="lazy" alt="Solana Logo" width={150} height={150} />
       </div>
     </div>
   )
