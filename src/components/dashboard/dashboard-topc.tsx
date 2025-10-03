@@ -1,11 +1,7 @@
 'use client'
 import { useEffect } from 'react'
 import { useFixedBalance } from '../account/fixed-data-balance' // ajuste o caminho conforme seu projeto
-import { Button } from '@/components/ui/button'
-import { RefreshCw } from 'lucide-react'
 import Image from 'next/image'
-
-
 
 interface TopContProps {
   refreshTrigger?: any // opcional, se quiser atualizar de fora
@@ -14,7 +10,6 @@ interface TopContProps {
 const TopCont: React.FC<TopContProps> = ({ refreshTrigger }) => {
   const { data: balance, isLoading, error, refetch } = useFixedBalance()
 
-  // Atualiza se houver trigger externo
   useEffect(() => {
     if (refreshTrigger) refetch()
   }, [refreshTrigger])
@@ -36,7 +31,6 @@ const TopCont: React.FC<TopContProps> = ({ refreshTrigger }) => {
         </Button>
       </div>
     </div>
-    </>
   )
 }
 

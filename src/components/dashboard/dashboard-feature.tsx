@@ -12,7 +12,6 @@ import ArmsPL from './armsPL.svg'
 import ArmsSL from './armsSL.svg'
 import Image from 'next/image'
 
-
 interface HistoryRecord {
   player: number
   program: number
@@ -137,13 +136,6 @@ export default function DashboardFeature() {
                 </button>
               </div>
             </div>
-            {/* Status */}
-            <div className="flex items-center space-y-3">
-              <p className="flex-1 text-center font-bold">{solBalance.toFixed(4)} SOL</p>
-              <p className="flex-1 text-center font-bold">Credits: {credits}</p>
-              <p className="flex-1 text-center font-bold">Score {score}</p>
-            </div>
-            {/* Histórico */}
             <div className="bg-[#222222] rounded-xl shadow p-4">
               <h3 className="font-semibold mb-2 text-gray-700 gen-chat">Histórico</h3>
               {history.length === 0 ? (
