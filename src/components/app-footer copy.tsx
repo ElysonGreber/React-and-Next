@@ -1,3 +1,4 @@
+// app-footer.tsx
 import Image from 'next/image'
 import RPL90 from '../../public/RPL90'
 import RRL90 from '../../public/RRL90'
@@ -30,7 +31,7 @@ export function AppFooter() {
   return (
     <footer className="fixed bottom-0 w-full pointer-events-none">
       <div className="max-w-5xl mx-auto relative">
-        {/* <div className="flex justify-center items-end space-x-8 relative -bottom-8 pointer-events-auto">
+        <div className="flex justify-center items-end space-x-8 relative -bottom-8 pointer-events-auto">
           <div>
             <button className="bg-amber-400 w-48 sm:w-64 md:w-72 lg:w-[300px] rounded-4xl custom-shadow-yellow ">
               <RRL90 className="-translate-y-15 " />
@@ -48,7 +49,7 @@ export function AppFooter() {
               <RSL90 className="-translate-y-2 sm:-translate-y-6 md:-translate-y-8" />
             </button>
           </div>
-        </div> */}
+        </div>
       </div>
     </footer>
   )
