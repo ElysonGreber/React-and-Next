@@ -73,7 +73,6 @@ export default function DashboardFeature() {
       await fetchGameData()
       setTxLogs(logs)
       showToast({ type: 1, title: 'Jogada realizada', message: `Tx: ${signature}` })
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       console.error(err)
       showToast({ type: 2, title: 'Erro', message: err.message || 'Erro ao jogar' })
