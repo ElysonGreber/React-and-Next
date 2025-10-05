@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 //dashboard-deature.tsx
 'use client'
 import { useEffect, useState } from 'react'
@@ -91,146 +90,128 @@ export default function DashboardFeature() {
         <TopCont />
         {wallet.connected && (
           <div className="space-y-8">
-            <div>
-              <div className="flex-1 flex text-center font-bold space-x-1 ">{solBalance.toFixed(4)} SOL</div>
-              <div className="flex items-center space-x-5">
-                <div className="flex-1 m-0 text-center align-middle text-black font-bold h-30 w-full bg-amber-400 rounded-3xl">
-                  Level
-                </div>
-                <div className="flex-1 m-0 align-middle justify-center items-center text-center text-black font-bold h-30 w-full bg-blue-400 rounded-3xl custom-shadow-2 ">
-                  <div className="flex flex-col align-middle justify-center items-center h-30 p-3 text-white ">
-                    <p className="p-1 border-b-3 border-b-white w-full"> Credits </p>{' '}
-                    <h1 className="pt-2 h-50 text-5xl"> 0{credits} </h1>{' '}
-                  </div>
-                </div>
-                <p className=" flex-1 m-0 text-center text-black font-bold h-30 w-full bg-green-400 rounded-3xl custom-shadow-2 ">
-                  Score {score}
-                </p>
+            
+            {/* <div className="flex-1 text-center font-bold space-x-1 ">{solBalance.toFixed(4)} SOL</div> */}
+            <div className="flex items-center space-x-5">
+              <div className="flex-1 m-0 text-center align-middle text-black font-bold h-30 w-full bg-amber-400 rounded-3xl">
+                Level
               </div>
-              <button
-                onClick={handleBuyCredit}
-                className=" cpm text-white rounded-lg bgbtn transition w-full custom-shadow-2 mt-4 "
-              >
-                Buy 5 Credits (0.01 SOL)
-              </button>
-              <div className="text-center space-x-4">
-                <h3 className="font-semibold text-gray-700">Escolha sua jogada:</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-3 justify-center gap-4 display-none ">
-                  <button
-                    onClick={() => handlePlay(0)}
-                    className="flex-1 h-50 px-4 py-2 bg-yellow-300 border-8 border-white btnsdc rounded-lg overflow-hidden transition"
-                  >
-                    <Image
-                      className="relative -left-10 object-contain"
-                      src={ArmsRL}
-                      alt="Rock"
-                      width={350}
-                      height={350}
-                    />
-                  </button>
-                  <button
-                    onClick={() => handlePlay(1)}
-                    className="flex-1 h-50 px-4 py-2 bg-yellow-300 border-8 border-white btnsdc rounded-lg overflow-hidden transition"
-                  >
-                    <Image
-                      className="relative -left-10 object-contain"
-                      src={ArmsPL}
-                      alt="Paper"
-                      width={350}
-                      height={350}
-                    />
-                  </button>
-                  <button
-                    onClick={() => handlePlay(2)}
-                    className="flex-1 h-50 px-4 py-2 bg-yellow-300 border-8 border-white btnsdc rounded-lg overflow-hidden transition"
-                  >
-                    <Image
-                      className="relative -left-10 object-contain"
-                      src={ArmsSL}
-                      alt="Scissor"
-                      width={350}
-                      height={350}
-                    />
-                  </button>
-                </div>
-              </div>
-              <div className="bg-[#222222] rounded-xl shadow p-4">
-                <h3 className="font-semibold mb-2 text-gray-700 gen-chat">Jorney</h3>
-                {history.length === 0 ? (
-                  <p className="text-gray-500 text-sm">First Play</p>
-                ) : (
-                  <>
-                    <div className="overflow-x-auto">
-                      <table className="min-w-full border-0 border-gray-200 text-sm">
-                        <thead className="bg-[#1a1a1b]">
-                          <tr>
-                            <th className="border-b-1 px-3 py-2">#</th>
-                            <th className="border-b-1 px-3 py-2">You</th>
-                            <th className="border-b-1 px-3 py-2">Program</th>
-                            <th className="border-b-1 px-3 py-2">Result</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {currentHistory.map((h, i) => (
-                            <tr key={i} className="text-center">
-                              <td className="border-b-1 px-3 py-2">{indexOfFirst + i + 1}</td>
-                              <td className="border-b-1 px-3 py-2">
-                                {h.player === 0 ? '✊ Pedra' : h.player === 1 ? '🖐 Papel' : '✌ Tesoura'}
-                              </td>
-                              <td className="border-b-1 px-3 py-2">
-                                {h.program === 0 ? '✊ Pedra' : h.program === 1 ? '🖐 Papel' : '✌ Tesoura'}
-                              </td>
-                              <td className="border-b-1 px-3 py-2">{renderResult(h.result)}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                    {/* Logs da transação */}
-                    {txLogs.length > 0 && (
-                      <div className="bg-gray-800 rounded p-2 mt-2 text-xs text-white max-h-40 overflow-y-auto">
-                        {txLogs.map((log, i) => (
-                          <div key={i}>{log}</div>
-                        ))}
-                      </div>
-                    )}
-                    {/* Paginação */}
-                    <div className="flex justify-between items-center mt-3">
-                      <button
-                        onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-                        disabled={currentPage === 1}
-                        className="px-3 py-1 bg-gray-700 text-white rounded disabled:opacity-50"
-                      >
-                        <svg
-                          className="w-[24px] h-[24px] fill-[#b3ffad]"
-                          viewBox="0 0 256 512"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path d="M9.4 278.6c-12.5-12.5-12.5-32.8 0-45.3l128-128c9.2-9.2 22.9-11.9 34.9-6.9s19.8 16.6 19.8 29.6l0 256c0 12.9-7.8 24.6-19.8 29.6s-25.7 2.2-34.9-6.9l-128-128z"></path>
-                        </svg>
-                      </button>
-                      <span className="text-sm text-gray-400">
-                        Página {currentPage} de {totalPages}
-                      </span>
-                      <button
-                        onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
-                        disabled={currentPage === totalPages}
-                        className="px-3 py-1 bg-gray-700 text-white rounded disabled:opacity-50"
-                      >
-                        <svg
-                          className="w-[24px] h-[24px] fill-[#b3ffad]"
-                          viewBox="0 0 256 512"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"></path>
-                        </svg>
-                      </button>
-                    </div>
-                    <BentoG />
-                  </>
-                )}
+              <p className="flex-1 m-0 text-center text-black font-bold h-30 w-full bg-blue-400 rounded-3xl custom-shadow-2">
+                Credits: {credits}
+              </p>
+              <p className="flex-1 m-0 text-center text-black font-bold h-30 w-full bg-green-400 rounded-3xl custom-shadow-2">
+                Score {score}
+              </p>
+            </div>
+            <button onClick={handleBuyCredit} className=" cpm text-white rounded-lg bgbtn transition w-full custom-shadow-2">
+              Buy 5 Credits (0.01 SOL)
+            </button>
+            <div className="text-center space-x-4">
+              <h3 className="font-semibold text-gray-700">Escolha sua jogada:</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-3 justify-center gap-4 display-none ">
+                <button
+                  onClick={() => handlePlay(0)}
+                  className="flex-1 h-50 px-4 py-2 bg-yellow-300 border-8 border-white btnsdc rounded-lg overflow-hidden transition"
+                >
+                  <Image
+                    className="relative -left-10 object-contain"
+                    src="/hands/armsRL.svg"
+                    alt="Rock"
+                    width={350}
+                    height={350}
+                  />
+                </button>
+                <button
+                  onClick={() => handlePlay(1)}
+                  className="flex-1 h-50 px-4 py-2 bg-yellow-300 border-8 border-white btnsdc rounded-lg overflow-hidden transition"
+                >
+                  <Image
+                    className="relative -left-10 object-contain"
+                    src="/hands/armsPL.svg"
+                    alt="Paper"
+                    width={350}
+                    height={350}
+                  />
+                </button>
+                <button
+                  onClick={() => handlePlay(2)}
+                  className="flex-1 h-50 px-4 py-2 bg-yellow-300 border-8 border-white btnsdc rounded-lg overflow-hidden transition"
+                >
+                  <Image
+                    className="relative -left-10 object-contain"
+                   src="/hands/armsSL.svg"
+                    alt="Scissor"
+                    width={350}
+                    height={350}
+                  />
+                </button>
               </div>
             </div>
+            <div className="bg-[#222222] rounded-xl shadow p-4">
+              <h3 className="font-semibold mb-2 text-gray-700 gen-chat">Jorney</h3>
+              {history.length === 0 ? (
+                <p className="text-gray-500 text-sm">First Play</p>
+              ) : (
+                <>
+                  <div className="overflow-x-auto">
+                    <table className="min-w-full border-0 border-gray-200 text-sm">
+                      <thead className="bg-[#1a1a1b]">
+                        <tr>
+                          <th className="border-b-1 px-3 py-2">#</th>
+                          <th className="border-b-1 px-3 py-2">You</th>
+                          <th className="border-b-1 px-3 py-2">Program</th>
+                          <th className="border-b-1 px-3 py-2">Result</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {currentHistory.map((h, i) => (
+                          <tr key={i} className="text-center">
+                            <td className="border-b-1 px-3 py-2">{indexOfFirst + i + 1}</td>
+                            <td className="border-b-1 px-3 py-2">
+                              {h.player === 0 ? '✊ Pedra' : h.player === 1 ? '🖐 Papel' : '✌ Tesoura'}
+                            </td>
+                            <td className="border-b-1 px-3 py-2">
+                              {h.program === 0 ? '✊ Pedra' : h.program === 1 ? '🖐 Papel' : '✌ Tesoura'}
+                            </td>
+                            <td className="border-b-1 px-3 py-2">{renderResult(h.result)}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  {/* Logs da transação */}
+                  {txLogs.length > 0 && (
+                    <div className="bg-gray-800 rounded p-2 mt-2 text-xs text-white max-h-40 overflow-y-auto">
+                      {txLogs.map((log, i) => (
+                        <div key={i}>{log}</div>
+                      ))}
+                    </div>
+                  )}
+                  {/* Paginação */}
+                  <div className="flex justify-between items-center mt-3">
+                    <button
+                      onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+                      disabled={currentPage === 1}
+                      className="px-3 py-1 bg-gray-700 text-white rounded disabled:opacity-50"
+                    >
+                      Anterior
+                    </button>
+                    <span className="text-sm text-gray-400">
+                      Página {currentPage} de {totalPages}
+                    </span>
+                    <button
+                      onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+                      disabled={currentPage === totalPages}
+                      className="px-3 py-1 bg-gray-700 text-white rounded disabled:opacity-50"
+                    >
+                      Próximo
+                    </button>
+                  </div>
+                  <BentoG />
+                </>
+              )}
+            </div>
+            {/* <BOTCont /> */}
           </div>
         )}
       </div>
