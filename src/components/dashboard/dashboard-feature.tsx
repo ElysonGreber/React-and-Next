@@ -7,6 +7,7 @@ import { useToaster } from '../app-toaster'
 import { BentoG } from './ui/bentoG'
 import TopCont from './ui/dashboard-topc'
 import Image from 'next/image'
+import { supabase } from '@/lib/supabaseClient'
 
 interface HistoryRecord {
   player: number
@@ -15,8 +16,10 @@ interface HistoryRecord {
 }
 
 export default function DashboardFeature() {
+  const [nickname, setNickname] = useState<string | null>(null)
+  const [walletAddr, setWalletAddr] = useState<string | null>(null)
+  const [titulo, setTitulo] = useState<string | null>(null)
   const wallet = useWallet()
-  // const [solBalance, setSolBalance] = useState<number>(0)
   const [credits, setCredits] = useState<number>(0)
   const [score, setScore] = useState<number>(0)
   const [history, setHistory] = useState<HistoryRecord[]>([])
@@ -24,27 +27,47 @@ export default function DashboardFeature() {
   const { showToast, toast } = useToaster()
   const itemsPerPage = 10
   const [currentPage, setCurrentPage] = useState(1)
-  // const fetchSolBalance = async () => {
-  //   if (wallet.publicKey) {
-  //     const balance = await connection.getBalance(wallet.publicKey)
-  //     setSolBalance(balance / LAMPORTS_PER_SOL)
-  //   }
-  // }
+
   const fetchGameData = async () => {
     if (wallet.publicKey) {
       try {
         const data = await readPda(wallet.publicKey)
         setCredits(data.credits)
         setScore(data.score)
-        setHistory(data.history) // Atualiza todo o histórico
+        setHistory(data.history)
       } catch (err) {
         console.error('Erro lendo PDA:', err)
       }
     }
   }
+  const fetchUserProfile = async () => {
+    if (wallet.publicKey) {
+      try {
+        const pubkey = wallet.publicKey.toBase58()
+        const { data, error } = await supabase
+          .from('profiles')
+          .select('nickname, wallet, titulo')
+          .eq('wallet', pubkey)
+          .single()
+
+        if (error) {
+          console.error('Erro ao buscar perfil:', error)
+          return
+        }
+
+        if (data) {
+          setNickname(data.nickname)
+          setWalletAddr(data.wallet)
+          setTitulo(data.titulo)
+        }
+      } catch (err) {
+        console.error('Erro geral ao buscar perfil:', err)
+      }
+    }
+  }
   useEffect(() => {
     if (wallet.connected) {
-      
+      fetchUserProfile()
       fetchGameData()
     }
   }, [wallet.connected])
@@ -65,7 +88,7 @@ export default function DashboardFeature() {
     try {
       const { signature, logs } = await sendInstruction(wallet, choice)
       // Atualiza tudo após cada jogada
-     
+
       await fetchGameData()
       setTxLogs(logs)
       showToast({ type: 1, title: 'Jogada realizada', message: `Tx: ${signature}` })
@@ -75,6 +98,16 @@ export default function DashboardFeature() {
       showToast({ type: 2, title: 'Erro', message: err.message || 'Erro ao jogar' })
     }
   }
+
+  const formatWallet = () => {
+    if (!walletAddr) return ''
+    if (window.innerWidth <= 900) {
+      // sm/md breakpoint: celular
+      return walletAddr.slice(0, 4) + '....' + walletAddr.slice(-4)
+    }
+    return walletAddr
+  }
+
   const renderResult = (result: number) => (result === 0 ? '❌ Loss' : result === 1 ? '➖ Won' : '✅ Victory')
   const sortedHistory = [...history].reverse()
   const indexOfLast = currentPage * itemsPerPage
@@ -85,9 +118,20 @@ export default function DashboardFeature() {
     <div>
       <div className="chat-header-cover bg-[#1b1b1b] border-b-2 border-b-zinc-800 custom-shadow-2 p-6 max-w-5xl mx-auto space-y-6">
         <TopCont />
+        <div className="text-center text-YellowSolana-50 font-bold mb-2">
+              {nickname ? 
+              (
+                <>
+                  <p>{nickname} The {titulo}</p>
+                  <p className="text-sm text-VerdeSolana-100 ">{formatWallet()}</p>
+                </>
+              ) : (
+                <p>Loading</p>
+              )}
+        </div>
+        <BentoG />
         {wallet.connected && (
           <div className="space-y-8">
-            
             {/* <div className="flex-1 text-center font-bold space-x-1 ">{solBalance.toFixed(4)} SOL</div> */}
             <div className="flex items-center space-x-5">
               <div className="flex-1 m-0 text-center align-middle text-black font-bold h-30 w-full bg-amber-400 rounded-3xl">
@@ -100,7 +144,11 @@ export default function DashboardFeature() {
                 Score {score}
               </p>
             </div>
-            <button onClick={handleBuyCredit} className=" cpm text-white rounded-lg bgbtn transition w-full custom-shadow-2">
+           
+            <button
+              onClick={handleBuyCredit}
+              className=" cpm text-white rounded-lg bgbtn transition w-full custom-shadow-2"
+            >
               Buy 5 Credits (0.01 SOL)
             </button>
             <div className="text-center space-x-4">
@@ -136,7 +184,7 @@ export default function DashboardFeature() {
                 >
                   <Image
                     className="relative -left-10 object-contain"
-                   src="/hands/armsSL.svg"
+                    src="/hands/armsSL.svg"
                     alt="Scissor"
                     width={350}
                     height={350}
@@ -204,7 +252,6 @@ export default function DashboardFeature() {
                       Próximo
                     </button>
                   </div>
-                  <BentoG />
                 </>
               )}
             </div>
