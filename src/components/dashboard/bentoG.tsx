@@ -37,12 +37,12 @@
               <div className="flex flex-1 items-center justify-center px-8 max-lg:pt-10 max-lg:pb-12 sm:px-10 lg:pb-2">
                 <img
                   alt=""
-                  src="https://tailwindcss.com/plus-assets/img/component-images/bento-03-performance.png"
+                  src="/bento-03-performance.png"
                   className="w-full max-lg:max-w-xs dark:hidden"
                 />
                 <img
                   alt=""
-                  src="https://tailwindcss.com/plus-assets/img/component-images/dark-bento-03-performance.png"
+                  src="/dark-bento-03-performance.png"
                   className="w-full not-dark:hidden max-lg:max-w-xs"
                 />
               </div>
