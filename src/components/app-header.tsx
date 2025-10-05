@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Menu, X } from 'lucide-react'
 // import { ThemeSelect } from '@/components/theme-select'
 import { ClusterUiSelect } from './cluster/cluster-ui'
-import { WalletButton } from '@/components/solana/solana-provider'
+import { WalletButton } from '@/components/dashboard/ui/solana/solana-provider'
 import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem} from "@heroui/react";
 
 export function AppHeader({ links = [] }: { links: { label: string; path: string }[] }) {

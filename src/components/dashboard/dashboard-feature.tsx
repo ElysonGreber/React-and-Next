@@ -3,10 +3,9 @@
 import { useEffect, useState } from 'react'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { connection, sendInstruction, readPda } from '@/lib/solanaHelper'
-import { LAMPORTS_PER_SOL } from '@solana/web3.js'
 import { useToaster } from '../app-toaster'
-import { BentoG } from './bentoG'
-import TopCont from './dashboard-topc'
+import { BentoG } from './ui/bentoG'
+import TopCont from './ui/dashboard-topc'
 import Image from 'next/image'
 
 interface HistoryRecord {

@@ -16,7 +16,7 @@ export const connection = new Connection("https://api.devnet.solana.com", "confi
 export const DATA_SIZE = 8 + 1 + 1 + 200 * 3;
 
 export async function getPda(publicKey: PublicKey) {
-  const [pda] = await PublicKey.findProgramAddress([Buffer.from("score"), publicKey.toBuffer()], PROGRAM_ID);
+  const [pda] = await PublicKey.findProgramAddressSync([Buffer.from("score"), publicKey.toBuffer()], PROGRAM_ID);
   return pda;
 }
 

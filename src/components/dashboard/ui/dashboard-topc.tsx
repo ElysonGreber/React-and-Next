@@ -1,6 +1,6 @@
 'use client'
 import { useEffect } from 'react'
-import { useFixedBalance } from '../account/fixed-data-balance' // ajuste o caminho conforme seu projeto
+import { useFixedBalance } from '../../account/fixed-data-balance' // ajuste o caminho conforme seu projeto
 import Image from 'next/image'
 
 interface TopContProps {

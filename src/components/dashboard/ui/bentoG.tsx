@@ -35,16 +35,6 @@
                 </p>
               </div>
               <div className="flex flex-1 items-center justify-center px-8 max-lg:pt-10 max-lg:pb-12 sm:px-10 lg:pb-2">
-                <img
-                  alt=""
-                  src="/bento-03-performance.png"
-                  className="w-full max-lg:max-w-xs dark:hidden"
-                />
-                <img
-                  alt=""
-                  src="/dark-bento-03-performance.png"
-                  className="w-full not-dark:hidden max-lg:max-w-xs"
-                />
               </div>
             </div>
             <div className="pointer-events-none absolute inset-px rounded-lg shadow-sm outline outline-black/5 max-lg:rounded-t-4xl dark:outline-white/15" />
@@ -61,16 +51,6 @@
                 </p>
               </div>
               <div className="@container flex flex-1 items-center max-lg:py-6 lg:pb-2">
-                <img
-                  alt=""
-                  src="https://tailwindcss.com/plus-assets/img/component-images/bento-03-security.png"
-                  className="h-[min(152px,40cqw)] object-cover dark:hidden"
-                />
-                <img
-                  alt=""
-                  src="https://tailwindcss.com/plus-assets/img/component-images/dark-bento-03-security.png"
-                  className="h-[min(152px,40cqw)] object-cover not-dark:hidden"
-                />
               </div>
             </div>
             <div className="pointer-events-none absolute inset-px rounded-lg shadow-sm outline outline-black/5 dark:outline-white/15" />
