@@ -15040,7 +15040,8 @@ main a {
     overflow: hidden
 }
 
-.validators-page .hero .main-content {
+.validators-page .hero .
+-content {
     z-index: 10
 }
 

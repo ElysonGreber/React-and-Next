@@ -2,16 +2,13 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { useWallet } from '@solana/wallet-adapter-react'
-import { connection, sendInstruction, readPda } from './solanaHelper'
+import { connection, sendInstruction, readPda } from '@/lib/solanaHelper'
 import { LAMPORTS_PER_SOL } from '@solana/web3.js'
 import { useToaster } from '../app-toaster'
 import { BentoG } from './bentoG'
 import TopCont from './dashboard-topc'
-// import BOTCont from './dashboard-bot'
-import ArmsRL from './armsRL.svg'
-import ArmsPL from './armsPL.svg'
-import ArmsSL from './armsSL.svg'
 import Image from 'next/image'
+
 interface HistoryRecord {
   player: number
   program: number
@@ -20,7 +17,7 @@ interface HistoryRecord {
 
 export default function DashboardFeature() {
   const wallet = useWallet()
-  const [solBalance, setSolBalance] = useState<number>(0)
+  // const [solBalance, setSolBalance] = useState<number>(0)
   const [credits, setCredits] = useState<number>(0)
   const [score, setScore] = useState<number>(0)
   const [history, setHistory] = useState<HistoryRecord[]>([])
@@ -28,12 +25,12 @@ export default function DashboardFeature() {
   const { showToast, toast } = useToaster()
   const itemsPerPage = 10
   const [currentPage, setCurrentPage] = useState(1)
-  const fetchSolBalance = async () => {
-    if (wallet.publicKey) {
-      const balance = await connection.getBalance(wallet.publicKey)
-      setSolBalance(balance / LAMPORTS_PER_SOL)
-    }
-  }
+  // const fetchSolBalance = async () => {
+  //   if (wallet.publicKey) {
+  //     const balance = await connection.getBalance(wallet.publicKey)
+  //     setSolBalance(balance / LAMPORTS_PER_SOL)
+  //   }
+  // }
   const fetchGameData = async () => {
     if (wallet.publicKey) {
       try {
@@ -48,14 +45,14 @@ export default function DashboardFeature() {
   }
   useEffect(() => {
     if (wallet.connected) {
-      fetchSolBalance()
+      
       fetchGameData()
     }
   }, [wallet.connected])
   const handleBuyCredit = async () => {
     try {
       const { signature, logs } = await sendInstruction(wallet, 0xff)
-      await fetchSolBalance()
+      // await fetchSolBalance()
       await fetchGameData()
       setTxLogs(logs)
       showToast({ type: 1, title: 'Sucesso', message: `Créditos comprados! Tx: ${signature}` })
@@ -69,10 +66,11 @@ export default function DashboardFeature() {
     try {
       const { signature, logs } = await sendInstruction(wallet, choice)
       // Atualiza tudo após cada jogada
-      await fetchSolBalance()
+     
       await fetchGameData()
       setTxLogs(logs)
       showToast({ type: 1, title: 'Jogada realizada', message: `Tx: ${signature}` })
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       console.error(err)
       showToast({ type: 2, title: 'Erro', message: err.message || 'Erro ao jogar' })
@@ -215,47 +213,8 @@ export default function DashboardFeature() {
           </div>
         )}
       </div>
+
       {toast}
-        <div className="overflow-y-clip sticky bottom-0">
-                <div className=" grid grid-rows-2 h-50 w-full rounded-md items-center text-2xl text-center gap-2">
-                  <div className="flex justify-center items-end space-x-8 relative -bottom-8 pointer-events-auto">
-                    <div className='fixed -bottom-10 -translate-x-80  m-0'>
-                      <button className="bg-amber-400 w-48 sm:w-64 md:w-72 lg:w-[300px] rounded-4xl custom-shadow-yellow ">
-                        <Image
-                          className="relative object-contain -rotate-90"
-                          src={ArmsRL}
-                          alt="Rock"
-                          width={350}
-                          height={350}
-                        />
-                      </button>
-                    </div>
-                    <div className='fixed -bottom-10 m-0 '>
-                      <button className="bg-blue-400 w-48 sm:w-64 md:w-72 lg:w-[300px] rounded-4xl custom-shadow-blue">
-                        <Image
-                          className="relative -left-10 object-contain -rotate-90"
-                          src={ArmsPL}
-                          alt="Paper"
-                          width={350}
-                          height={350}
-                        />
-                      </button>
-                    </div>
-                    <div className='fixed -bottom-10 translate-x-80 m-0'>
-                      <button className="bg-green-400 w-48 sm:w-64 md:w-72 lg:w-[300px] -bottom-2 rounded-4xl custom-shadow-green ">
-                        <Image
-                          className="relative -left-10 object-contain -rotate-90"
-                          src={ArmsSL}
-                          alt="Scissor"
-                          width={350}
-                          height={350}
-                        />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
     </div>
-    
   )
 }
