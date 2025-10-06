@@ -3,7 +3,6 @@ import { useEffect, useState, useCallback } from 'react'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { sendInstruction, readPda } from '@/lib/solanaHelper'
 import { useToaster } from '../app-toaster'
-import { BentoG } from './ui/bentoG'
 import TopCont from './ui/dashboard-topc'
 import Image from 'next/image'
 import { supabase } from '@/lib/supabaseClient'
@@ -187,24 +186,23 @@ export default function DashboardFeature() {
     <div>
       <div className="chat-header-cover bg-[#1b1b1b] border-b-2 border-b-zinc-800 custom-shadow-2 p-6 max-w-5xl mx-auto space-y-6">
         <TopCont />
-
-        <BentoG />
         {wallet.connected && (
           <div className="space-y-8">
             <div>
-              <div className="text-center text-YellowSolana-50 font-bold mb-2">
+              <div className="text-center  font-bold mb-2">
                 {nickname ? (
-                 <div className='flex w-full bg-Solana-400'> 
-                    <div className="flex justify-center items-center mb-0 -mt-4">
+                 <div className='flex w-full bg-[#1b1b1b] bgpatternB '> 
+                    <div className="flex gap-1.5 justify-center items-center mb-0 -mt-4">
+                      <div className='w-auto h-auto  bgsqr'>
                        <MicahAvatar seed={walletAddr || nickname || 'default'} size={100} />
+                      </div>
                         <div>
-                        <p className='text-left mb-2 mt-4 text-xl sm:text-3xl'>
+                        <p className='ggradgreen text-left mb-2 mt-auto text-xl sm:text-3xl'>
                           {nickname} The {titulo}
                         </p>
                         <p className="text-left text-sm text-VerdeSolana-100 ">{formatWallet()}</p>
                         </div>
-                    </div>
-                       
+                    </div>  
                     </div>
                     ) : (
                     <p>Loading</p>
@@ -220,7 +218,6 @@ export default function DashboardFeature() {
                 Score {score}
               </p>
             </div>
-
             <button
               onClick={handleBuyCredit}
               disabled={credits > 0}
@@ -228,7 +225,6 @@ export default function DashboardFeature() {
             >
               Buy 5 Credits (0.01 SOL)
             </button>
-
             <div className="text-center space-x-4">
               <h3 className="font-semibold text-gray-700">Choose your move:</h3>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -255,7 +251,6 @@ export default function DashboardFeature() {
                 </button>
               </div>
             </div>
-
             <div className="bg-[#222222] rounded-xl shadow p-4">
               <h3 className="font-semibold mb-2 text-gray-700 gen-chat">Journey</h3>
               {history.length === 0 ? (
@@ -322,7 +317,6 @@ export default function DashboardFeature() {
           </div>
         )}
       </div>
-
       {/* Modal do jogo */}
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <DialogContent className="bg-[#1b1b1b] text-center text-white rounded-lg">
@@ -339,7 +333,6 @@ export default function DashboardFeature() {
           )}
         </DialogContent>
       </Dialog>
-
       {toast}
     </div>
   )

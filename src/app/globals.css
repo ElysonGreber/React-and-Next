@@ -151,14 +151,14 @@
   --radius-xl: calc(var(--radius) + 4px);
   --animate-shine: shine var(--duration) infinite linear;
   @keyframes shine {
-  0% {
-    background-position: 0% 0%;
+    0% {
+      background-position: 0% 0%;
     }
-  50% {
-    background-position: 100% 100%;
+    50% {
+      background-position: 100% 100%;
     }
-  to {
-    background-position: 0% 0%;
+    to {
+      background-position: 0% 0%;
     }
   }
 }
@@ -232,7 +232,7 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
-.colorsSolana{
+.colorsSolana {
   --color-Solana-50: oklch(0.958 0.023 299.44);
   --color-Solana-100: oklch(0.918 0.045 298.01);
   --color-Solana-200: oklch(0.836 0.095 298.73);
@@ -343,14 +343,13 @@
   --color-OrangeSolana-800: oklch(0.339 0.103 41.44);
   --color-OrangeSolana-900: oklch(0.241 0.072 42.32);
   --color-OrangeSolana-950: oklch(0.182 0.055 41.46);
-
 }
 @font-face {
-    font-family: 'Hiruko'; /* Nome que você dará para sua fonte */
-    src: url('/HirukoBlackAlternate.ttf') format('truetype'); /* Caminho para o arquivo da fonte */
-    font-weight: normal;
-    font-style: normal;
-  }
+  font-family: 'Hiruko'; /* Nome que você dará para sua fonte */
+  src: url('/HirukoBlackAlternate.ttf') format('truetype'); /* Caminho para o arquivo da fonte */
+  font-weight: normal;
+  font-style: normal;
+}
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -372,144 +371,144 @@
   @apply !px-2 !py-[6px] !rounded-md !text-sm !font-semibold !shadow-sm !transition-all;
 }
 
-.sl0{
+.sl0 {
   background-image: url(https://assets.codepen.io/3685267/betting-app-wccettuo.png);
-
 }
-.sl1{
-  background-image: 
-    linear-gradient(90deg, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0.65) 50%, rgba(0, 0, 0, 0) 100%), 
-  url(https://assets.codepen.io/3685267/betting-app-vgnrodzy.png);
+.sl1 {
+  background-image:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0.65) 50%, rgba(0, 0, 0, 0) 100%),
+    url(https://assets.codepen.io/3685267/betting-app-vgnrodzy.png);
 }
-.sl2{
+.sl2 {
   background-image: url(https://assets.codepen.io/3685267/betting-app-zzbnyktk.png);
 }
-.sl3{
+.sl3 {
   background-image: url(https://assets.codepen.io/3685267/betting-app-ahiryyst.png);
 }
 
-.sidebar-circ{
-
-background: #3A3A3A;
-border: 1px solid #484848;
-box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
-
+.sidebar-circ {
+  background: #3a3a3a;
+  border: 1px solid #484848;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
-.menu-item-main{
+.menu-item-main {
   background: #151515;
   cursor: pointer;
-
 }
-.menu-item-main:hover{
-  background: linear-gradient(176.15deg, #2F2F2F 2.85%, #292929 104.97%);
-}
-
-.menu-item-main:hover .menu-item-main-icon{
-
-background: linear-gradient(180deg, #E4A704 0%, #FE7A00 100%);
-color: #222;
-border: none;
+.menu-item-main:hover {
+  background: linear-gradient(176.15deg, #2f2f2f 2.85%, #292929 104.97%);
 }
 
-.menu-item-main .menu-item-main-icon{
+.menu-item-main:hover .menu-item-main-icon {
+  background: linear-gradient(180deg, #e4a704 0%, #fe7a00 100%);
+  color: #222;
+  border: none;
+}
+
+.menu-item-main .menu-item-main-icon {
   background: #393939;
- color: #b3b3b3;
- border: 1px solid #444;
+  color: #b3b3b3;
+  border: 1px solid #444;
 }
 
-.plus-circ{
-background: linear-gradient(180deg, #E4A704 0%, #FE7A00 100%);
-color: #373739;
+.plus-circ {
+  background: linear-gradient(180deg, #e4a704 0%, #fe7a00 100%);
+  color: #373739;
 }
 
-.profile-sec{
+.profile-sec {
   background: linear-gradient(180deg, #353535 0%, #222222 100%);
 }
 
-.profile-img-container{
-  background: linear-gradient(180deg, #E4A704 0%, #FE7A00 100%);
+.profile-img-container {
+  background: linear-gradient(180deg, #e4a704 0%, #fe7a00 100%);
 }
 
-.gen-chat{
-      background: linear-gradient(to bottom, #E4A704, #FE7A00);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+.gen-chat {
+  background: linear-gradient(to bottom, #e4a704, #fe7a00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.chat-header-cover{
+.chat-header-cover {
   background: rgba(34, 34, 34, 0.7);
-backdrop-filter: blur(2px);
-border-top-left-radius: 24px;
-border-top-right-radius: 24px;
+  backdrop-filter: blur(2px);
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
 }
 
-.menu-item-with-icon{
+.menu-item-with-icon {
   opacity: 0;
   transform: scale(1);
-  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+  transition:
+    opacity 0.3s ease-out,
+    transform 0.3s ease-out;
 }
 
-.menu-item-main:hover .menu-item-with-icon{
+.menu-item-main:hover .menu-item-with-icon {
   opacity: 1;
   transform: scale(1.3);
 }
 
-.menu-item-with-image{
+.menu-item-with-image {
   opacity: 0;
-  right:68px;
-  top:6px;
+  right: 68px;
+  top: 6px;
   transform: scale(1);
-  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+  transition:
+    opacity 0.3s ease-out,
+    transform 0.3s ease-out;
 }
 
-.menu-item-main:hover .menu-item-with-image{
+.menu-item-main:hover .menu-item-with-image {
   opacity: 1;
   transform: scale(3.1);
 }
 
-.animated-swiper-item{
+.animated-swiper-item {
   transform: scale(1);
   transition: transform 0.3s ease-out;
 }
-.animated-swiper-item:hover{
+.animated-swiper-item:hover {
   transform: scale(1.1);
   cursor: pointer;
-
 }
 
-.yellow-gradient-1{
-  background: linear-gradient(180deg, #FFBE28 0%, #FF7C00 100%);
+.yellow-gradient-1 {
+  background: linear-gradient(180deg, #ffbe28 0%, #ff7c00 100%);
 }
-.gray-gradient{
-   background:linear-gradient(180deg, #525252 0%, #525252 100%)
+.gray-gradient {
+  background: linear-gradient(180deg, #525252 0%, #525252 100%);
 }
 
-.custom-shadow-1{
+.custom-shadow-1 {
   box-shadow: 10px 11px 9.9px rgba(0, 0, 0, 0.25);
 }
-.custom-shadow-2{
+.custom-shadow-2 {
   box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.25);
 }
-.custom-shadow-3{
+.custom-shadow-3 {
   box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.15);
 }
 
-.custrombg{
+.custrombg {
   background-color: #222222;
 }
 
-.custom-shadow-blue{
+.custom-shadow-blue {
   box-shadow: 0px 0px 27px -2px rgb(85 164 255 / 58%);
 }
-.custom-shadow-yellow{
+.custom-shadow-yellow {
   box-shadow: 0 0 27px -2px rgb(254 184 0 / 67%);
 }
-.custom-shadow-green{
-  box-shadow: 0 0 27px -2px rgb(37 222 119 / 67%),0 0 27px -2px rgba(2, 13, 7, 0.67) ;
+.custom-shadow-green {
+  box-shadow:
+    0 0 27px -2px rgb(37 222 119 / 67%),
+    0 0 27px -2px rgba(2, 13, 7, 0.67);
 }
 
-.titem{
+.titem {
   height: 112px;
   position: absolute;
   top: 0;
@@ -524,30 +523,33 @@ border-top-right-radius: 24px;
 }
 
 .btnsdc {
-  box-shadow: 0px 0px 0px 5px rgba(0,0,0,1) inset;
+  box-shadow: 0px 0px 0px 5px rgba(0, 0, 0, 1) inset;
 }
 .btnsdc:hover {
-  box-shadow: 0px 0px 0px 5px rgba(0,0,0,1) inset;
+  box-shadow: 0px 0px 0px 5px rgba(0, 0, 0, 1) inset;
   scale: 1.05;
-  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
-
+  transition:
+    opacity 0.3s ease-out,
+    transform 0.3s ease-out;
 }
-.bggrad{
-  background-image: linear-gradient( cyan, transparent),linear-gradient(-45deg, magenta,transparent),linear-gradient( 45deg, yellow, transparent);  
-
+.bggrad {
+  background-image:
+    linear-gradient(cyan, transparent), linear-gradient(-45deg, magenta, transparent),
+    linear-gradient(45deg, yellow, transparent);
 }
 
-.bgbtn{
-      background: linear-gradient(180deg, #22c55e, #16a34a);
-      box-shadow: 0 8px 20px rgba(34, 197, 94, 0.35);
+.bgbtn {
+  background: linear-gradient(180deg, #22c55e, #16a34a);
+  box-shadow: 0 8px 20px rgba(34, 197, 94, 0.35);
 }
 
 .bgbtn:hover {
   background: linear-gradient(180deg, #51d481, #16a34a);
-      box-shadow: 0 8px 20px rgba(132, 213, 162, 0.35);
-      scale: 1.05;
-       transition: opacity 0.3s ease-out, transform 0.3s ease-out;
-
+  box-shadow: 0 8px 20px rgba(132, 213, 162, 0.35);
+  scale: 1.05;
+  transition:
+    opacity 0.3s ease-out,
+    transform 0.3s ease-out;
 }
 
 .perspective {
@@ -568,91 +570,113 @@ border-top-right-radius: 24px;
 
 /* Base mobile-first: telas menores */
 .btngame {
-  width: 5rem;   /* 192px */
-height: auto;
+  width: 5rem; /* 192px */
+  height: auto;
   border-radius: 2rem;
 }
 
 /* >= 640px (sm - tablet pequeno) */
 @media (min-width: 40rem) {
   .btngame {
-    width: 16rem;   /* 256px */
-height: auto;
+    width: 16rem; /* 256px */
+    height: auto;
   }
 }
 
 /* >= 768px (md - tablet maior) */
 @media (min-width: 48rem) {
   .btngame {
-    width: 18rem;   /* 288px */
-height: auto;
+    width: 18rem; /* 288px */
+    height: auto;
   }
 }
 
 /* >= 1024px (lg - desktop) */
 @media (min-width: 64rem) {
   .btngame {
-    width: 18rem;   /* 350px */
-height: auto;
+    width: 18rem; /* 350px */
+    height: auto;
   }
   .ctmspace-x-8 {
-
-        --tw-space-x-reverse: 0;
-        margin-inline-start: calc(calc(var(--spacing) * 8) /* 2rem = 32px */ * var(--tw-space-x-reverse));
-        margin-inline-end: calc(calc(var(--spacing) * 8) /* 2rem = 32px */ * calc(1 - var(--tw-space-x-reverse)));
+    --tw-space-x-reverse: 0;
+    margin-inline-start: calc(calc(var(--spacing) * 8) /* 2rem = 32px */ * var(--tw-space-x-reverse));
+    margin-inline-end: calc(calc(var(--spacing) * 8) /* 2rem = 32px */ * calc(1 - var(--tw-space-x-reverse)));
   }
 }
 
 .ggradpurple {
   background-clip: text;
   color: #15151500;
-    background-image: linear-gradient(100.51deg,#f087ff 27.61%,#6e1fce 62.14%,rgba(110,31,206,.1) 113.78%);
+  background-image: linear-gradient(100.51deg, #f087ff 27.61%, #6e1fce 62.14%, rgba(110, 31, 206, 0.1) 113.78%);
 }
 
-.ggradgreen { background-image: linear-gradient(97.65deg,#19fb9b 11.36%,#23f9eb 54.3%,#03ddce 100.78%);
-background-clip: text;
+.ggradgreen {
+  background-image: linear-gradient(97.65deg, #19fb9b 11.36%, #23f9eb 54.3%, #03ddce 100.78%);
+  background-clip: text;
   color: transparent;
 }
 
 .ctmspace-x-8 {
-    :where(& > :not(:last-child)) {
-        --tw-space-x-reverse: 0;
-        margin-inline-start: calc(calc(var(--spacing) * 8) /* 2rem = 32px */ * var(--tw-space-x-reverse));
-        margin-inline-end: calc(calc(var(--spacing) * 8) /* 2rem = 32px */ * calc(1 - var(--tw-space-x-reverse)));
-    }
+  :where(& > :not(:last-child)) {
+    --tw-space-x-reverse: 0;
+    margin-inline-start: calc(calc(var(--spacing) * 8) /* 2rem = 32px */ * var(--tw-space-x-reverse));
+    margin-inline-end: calc(calc(var(--spacing) * 8) /* 2rem = 32px */ * calc(1 - var(--tw-space-x-reverse)));
+  }
 }
 
-.bgpattern{
-height: auto;
+.bgpattern {
+  height: auto;
+  background-image: url(/BGpatternGD.svg);
+  background-size: 15rem;
+}
+
+.bgpatternB {
+  height: auto;
+    background: #342d629c;
     background-image: url(/BGpatternGD.svg);
+    background-blend-mode: normal;
     background-size: 15rem;
+    background-position-y: -22px;
+    border-radius: 20px;
+    border-bottom: 1px solid #c36bee6e;
 }
 
-.bghandsa{
-    background-size: 90%;
-    background-image: auto;
-    background-image: url(/bg3.png);
-    background-repeat: no-repeat;
-    background-position: 48% -545px;
-    scale: -1;
-    background-blend-mode: luminosity;
+.bgdust {
+  height: auto;
+  background-image: url(/BgDust.svg), url(/bgabs.jpeg) ;
+  background-size:cover;
 }
 
-.bghandsb{
-      background-size: 90%;
-    background-image: auto;
-    background-image: url(/bg3.png);
-    background-position: 50% -160px;
-    background-repeat: no-repeat;
-    scale: -1;
-    background-blend-mode: luminosity;
+.bgsqr {
+  height: auto;
+  background-image: url(/sqr-shine.svg) ;
+  background-size:cover;
 }
-.hiruko{
-    text-anchor: middle;
-    font-size: 100px;
-    text-align: center;
-    font-family: 'Hiruko';
-    vertical-align: text-top;
-    height: 105px;
-    letter-spacing: 12px;
+
+.bghandsa {
+  background-size: 90%;
+  background-image: auto;
+  background-image: url(/bg3.png);
+  background-repeat: no-repeat;
+  background-position: 48% -545px;
+  scale: -1;
+  background-blend-mode: luminosity;
+}
+
+.bghandsb {
+  background-size: 90%;
+  background-image: auto;
+  background-image: url(/bg3.png);
+  background-position: 50% -160px;
+  background-repeat: no-repeat;
+  scale: -1;
+  background-blend-mode: luminosity;
+}
+.hiruko {
+  text-anchor: middle;
+  text-align: center;
+  font-family: 'Hiruko';
+  vertical-align: text-top;
+  height: 45px;
+  letter-spacing: 12px;
 }
