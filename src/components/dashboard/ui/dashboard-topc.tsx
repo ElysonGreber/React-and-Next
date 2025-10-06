@@ -15,7 +15,7 @@ const TopCont: React.FC<TopContProps> = ({ refreshTrigger }) => {
   }, [refetch, refreshTrigger])
 
   return (
-    <div className="grid h-50 w-full rounded-md justify-items-center items-center text-2xl text-center gap-2 bgpattern">
+    <div className="grid h-50 w-full mb-0 rounded-md justify-items-center items-center text-2xl text-center gap-2 bgpattern">
       <div className="mt-5">
         {balance !== undefined && !isLoading && !error && (
           <div className="grid-cols-1 items-center gap-2">

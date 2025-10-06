@@ -21,6 +21,8 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
+    "@dicebear/collection": "^9.2.4",
+    "@dicebear/core": "^9.2.4",
     "@heroui/avatar": "^2.2.21",
     "@heroui/button": "^2.2.26",
     "@heroui/dropdown": "^2.3.26",

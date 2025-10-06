@@ -345,7 +345,12 @@
   --color-OrangeSolana-950: oklch(0.182 0.055 41.46);
 
 }
-
+@font-face {
+    font-family: 'Hiruko'; /* Nome que você dará para sua fonte */
+    src: url('/HirukoBlackAlternate.ttf') format('truetype'); /* Caminho para o arquivo da fonte */
+    font-weight: normal;
+    font-style: normal;
+  }
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -621,4 +626,33 @@ background-clip: text;
 height: auto;
     background-image: url(/BGpatternGD.svg);
     background-size: 15rem;
+}
+
+.bghandsa{
+    background-size: 90%;
+    background-image: auto;
+    background-image: url(/bg3.png);
+    background-repeat: no-repeat;
+    background-position: 48% -545px;
+    scale: -1;
+    background-blend-mode: luminosity;
+}
+
+.bghandsb{
+      background-size: 90%;
+    background-image: auto;
+    background-image: url(/bg3.png);
+    background-position: 50% -160px;
+    background-repeat: no-repeat;
+    scale: -1;
+    background-blend-mode: luminosity;
+}
+.hiruko{
+    text-anchor: middle;
+    font-size: 100px;
+    text-align: center;
+    font-family: 'Hiruko';
+    vertical-align: text-top;
+    height: 105px;
+    letter-spacing: 12px;
 }
