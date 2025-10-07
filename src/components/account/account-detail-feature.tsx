@@ -7,6 +7,7 @@ import { ExplorerLink } from '../cluster/cluster-ui'
 import { AccountBalance, AccountButtons, AccountTokens, AccountTransactions } from './account-ui'
 import { AppHero } from '../app-hero'
 import { ellipsify } from '@/lib/utils'
+import  AccountStatistic  from './account-data-game-statistic'
 
 export default function AccountDetailFeature() {
   const params = useParams()
@@ -25,7 +26,8 @@ export default function AccountDetailFeature() {
   }
 
   return (
-    <div>
+    <div className='chat-header-cover bg-[#1b1b1b] border-b-2 border-b-zinc-800 custom-shadow-2 p-6 max-w-5xl mx-auto space-y-6'>
+      <div className='bgpattern'>
       <AppHero
         title={<AccountBalance address={address} />}
         subtitle={
@@ -34,10 +36,14 @@ export default function AccountDetailFeature() {
           </div>
         }
       >
+      
         <div className="my-4">
           <AccountButtons address={address} />
         </div>
       </AppHero>
+
+      </div>
+            <AccountStatistic />
       <div className="space-y-8">
         <AccountTokens address={address} />
         <AccountTransactions address={address} />

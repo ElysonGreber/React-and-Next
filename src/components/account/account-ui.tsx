@@ -27,7 +27,7 @@ export function AccountBalance({ address }: { address: PublicKey }) {
   const query = useGetBalance({ address })
 
   return (
-    <h1 className="text-5xl font-bold cursor-pointer" onClick={() => query.refetch()}>
+    <h1 className="text-5xl font-bold cursor-pointer ggradgreen" onClick={() => query.refetch()}>
       {query.data ? <BalanceSol balance={query.data} /> : '...'} SOL
     </h1>
   )
@@ -194,7 +194,7 @@ export function AccountTransactions({ address }: { address: PublicKey }) {
       </div>
       {query.isError && <pre className="alert alert-error">Error: {query.error?.message.toString()}</pre>}
       {query.isSuccess && (
-        <div>
+        <div className='bg-[#222222] rounded-xl shadow p-4'>
           {query.data.length === 0 ? (
             <div>No transactions found.</div>
           ) : (

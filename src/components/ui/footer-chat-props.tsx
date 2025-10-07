@@ -86,7 +86,7 @@ export default function FooterChat({ wsUrl, nickname, walletAddress }: FooterCha
   if (!isOpen) {
     return (
       <div
-        className="fixed bottom-2 right-2 cursor-pointer p-2 bg-blue-600 rounded-full text-white z-50"
+        className="fixed bottom-2 right-2 cursor-pointer p-2 bg-black rounded-full text-white z-50"
         onClick={() => setIsOpen(true)}
       >
         Open Chat
@@ -97,11 +97,11 @@ export default function FooterChat({ wsUrl, nickname, walletAddress }: FooterCha
   return (
     <div
       ref={chatRef}
-      className="fixed bottom-0 right-0 w-80 max-w-full h-96 bg-[#1b1b1b] text-white rounded-t-lg shadow-lg flex flex-col z-50"
+      className="fixed bottom-0 right-0 w-100 max-w-full h-96 bg-[#1b1b1b] text-white rounded-t-lg shadow-lg flex flex-col z-50"
     >
       <div className="flex items-center justify-between p-2 bg-[#111] border-b border-gray-700">
         <span className="font-bold">Chat</span>
-        <button onClick={() => setIsOpen(false)} className="text-red-500 font-bold">
+        <button onClick={() => setIsOpen(false)} className="text-blue-300 font-bold">
           X
         </button>
       </div>
@@ -124,7 +124,7 @@ export default function FooterChat({ wsUrl, nickname, walletAddress }: FooterCha
       <div className="flex p-2 border-t border-gray-700 space-x-2">
         <input
           type="text"
-          className="flex-1 bg-[#222] text-white rounded px-2 py-1 focus:outline-none"
+          className="flex-1 bg-[#1b1b1b] text-white rounded px-2 py-1 focus:outline-none"
           value={messageInput}
           onChange={(e) => setMessageInput(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && handleSend()}
@@ -132,7 +132,7 @@ export default function FooterChat({ wsUrl, nickname, walletAddress }: FooterCha
         />
         <button
           onClick={handleSend}
-          className="px-3 py-1 bg-blue-600 rounded hover:bg-blue-700 transition"
+          className="px-3 py-1 bg-VerdeSolana-300 rounded hover:bg-VerdeSolana-300 transition"
         >
           Send
         </button>

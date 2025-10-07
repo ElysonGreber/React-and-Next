@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { supabase } from '@/lib/supabaseClient'
 import { useWallet } from '@solana/wallet-adapter-react'
-
+import  BentoGrid  from '@/components/market/market-feature'
 export default function CreatePerfilPage() {
   const wallet = useWallet()
   const [nickname, setNickname] = useState('')
@@ -63,7 +63,7 @@ export default function CreatePerfilPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center py-10 bg-black">
+    <div className="min-h-screen flex items-center justify-center py-10 bg-[#0a0a0a]">
       <div className="bg-[#1b1b1b] text-AmberSolana-300 p-8 rounded-2xl shadow-lg w-full max-w-md">
         <h1 className="text-2xl font-bold mb-6 text-center">Criar Perfil</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -148,6 +148,8 @@ export default function CreatePerfilPage() {
           </button>
         </form>
       </div>
+      
     </div>
+  
   )
 }
