@@ -7,7 +7,6 @@ import { supabase } from '@/lib/supabaseClient'
 import { MicahAvatar } from '../ui/micah-avatar'
 import { Table, TableBody, TableCell, TableHeader, TableRow, TableRow as TableRowHeader } from '@/components/ui/table'
 import * as d3 from 'd3'
-
 interface HistoryRecord {
   player: number
   program: number
@@ -106,6 +105,7 @@ const Lollipop = ({ height, data }: LollipopProps) => {
 }
 
 export default function AccountStatistics() {
+
   const [nickname, setNickname] = useState<string | null>(null)
   const [walletAddr, setWalletAddr] = useState<string | null>(null)
   const [titulo, setTitulo] = useState<string | null>(null)
@@ -120,7 +120,6 @@ export default function AccountStatistics() {
   const indexOfFirst = indexOfLast - itemsPerPage
   const currentHistory = sortedHistory.slice(indexOfFirst, indexOfLast)
   const totalPages = Math.ceil(sortedHistory.length / itemsPerPage)
-
   const colorMap = ['text-red-500', 'text-gray-300', 'text-green-500']
   const textR = ['Loss', 'Draw', 'Won']
 
@@ -219,7 +218,6 @@ export default function AccountStatistics() {
           <p>Loading</p>
         )}
       </div>
-
       {/* Tabela + gráficos */}
       <h2 className="text-2xl font-bold">Play History</h2>
       <div className="bg-[#222222] rounded-xl shadow p-4">

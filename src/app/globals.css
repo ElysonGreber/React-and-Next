@@ -680,3 +680,7 @@
   height: 45px;
   letter-spacing: 12px;
 }
+
+.gradhead {
+    background: linear-gradient(180deg, #353535 0%, #222222 100%);
+    }

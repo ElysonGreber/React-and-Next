@@ -4,6 +4,7 @@ import { useWallet } from '@solana/wallet-adapter-react'
 import { sendInstruction, readPda } from '@/lib/solanaHelper'
 import { useToaster } from '../app-toaster'
 import TopCont from './ui/dashboard-topc'
+import MainSlider from './ui/mainslider'
 import Image from 'next/image'
 import { supabase } from '@/lib/supabaseClient'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
@@ -186,6 +187,7 @@ export default function DashboardFeature() {
     <div>
       <div className="chat-header-cover bg-[#1b1b1b] border-b-2 border-b-zinc-800 custom-shadow-2 p-6 max-w-5xl mx-auto space-y-6">
         <TopCont />
+        <MainSlider />
         {wallet.connected && (
           <div className="space-y-8">
             <div>
