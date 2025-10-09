@@ -1,5 +1,7 @@
+// app/components/DashboardFeature.tsx (ou onde estiver)
 'use client'
-import { useEffect, useState, useCallback } from 'react'
+
+import { useEffect, useState, useCallback, useRef } from 'react'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { sendInstruction, readPda } from '@/lib/solanaHelper'
 import { useToaster } from '../app-toaster'
@@ -10,7 +12,9 @@ import { supabase } from '@/lib/supabaseClient'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { MicahAvatar } from '../ui/micah-avatar'
 import { LevelProgress } from '../app-levelprogress'
-import { calculateLevel, LEVEL_THRESHOLDS } from '@/lib/levelUtils'
+import { calculateLevel } from '@/lib/levelUtils'
+import { useSyncRanking } from '@/lib/useSyncRanking' // ✅ hook de ranking
+
 interface HistoryRecord {
   player: number
   program: number
@@ -26,12 +30,26 @@ export default function DashboardFeature() {
   const [score, setScore] = useState<number>(0)
   const [history, setHistory] = useState<HistoryRecord[]>([])
   const [txLogs, setTxLogs] = useState<string[]>([])
-  const [isPlaying, setIsPlaying] = useState(false) // bloqueio de botões durante jogada
+  const [isPlaying, setIsPlaying] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [resultMessage, setResultMessage] = useState<string | null>(null)
   const { showToast, toast } = useToaster()
   const itemsPerPage = 10
   const [currentPage, setCurrentPage] = useState(1)
+
+  // Para acessar nickname de forma síncrona
+  const nicknameRef = useRef<string | null>(null)
+  const walletAddrRef = useRef<string | null>(null)
+
+  const sortedHistory = [...history].reverse()
+  const indexOfLast = currentPage * itemsPerPage
+  const indexOfFirst = indexOfLast - itemsPerPage
+  const currentHistory = sortedHistory.slice(indexOfFirst, indexOfLast)
+  const totalPages = Math.ceil(sortedHistory.length / itemsPerPage)
+  const historyLength = history?.length || 0
+  const currentLevel = calculateLevel(historyLength)
+
+  const { syncRanking } = useSyncRanking() // ✅ hook externo
 
   // --- Fetch Game Data ---
   const fetchGameData = useCallback(async () => {
@@ -67,6 +85,8 @@ export default function DashboardFeature() {
           setNickname(data.nickname)
           setWalletAddr(data.wallet)
           setTitulo(data.titulo)
+          nicknameRef.current = data.nickname
+          walletAddrRef.current = data.wallet
         }
       } catch (err) {
         console.error('Erro geral ao buscar perfil:', err)
@@ -74,12 +94,23 @@ export default function DashboardFeature() {
     }
   }, [wallet.publicKey])
 
+  // --- Carregamento inicial + sincronização de ranking ---
   useEffect(() => {
-    if (wallet.connected) {
-      fetchUserProfile()
-      fetchGameData()
+    if (wallet.connected && wallet.publicKey) {
+      const pubkey = wallet.publicKey.toBase58()
+      const loadAll = async () => {
+        await fetchGameData()
+        await fetchUserProfile()
+
+        // Sincroniza ranking após carregar tudo
+        
+        if (nicknameRef.current) {
+          syncRanking(pubkey, nicknameRef.current, score)
+        }
+      }
+      loadAll()
     }
-  }, [wallet.connected, fetchUserProfile, fetchGameData])
+  }, [wallet.connected, wallet.publicKey, fetchGameData, fetchUserProfile, syncRanking, score])
 
   // ----- FLUXO COMPRA CRÉDITO -----
   const handleBuyCredit = async () => {
@@ -90,25 +121,21 @@ export default function DashboardFeature() {
 
     try {
       console.log('🔄 Iniciando compra de créditos...')
-
-      const { signature, logs } = await sendInstruction(wallet, 0xff, (stage) => {
-        console.log(stage) // log de fases
-      })
+      const { signature, logs } = await sendInstruction(wallet, 0xff)
 
       setTxLogs(logs)
 
-      // Confirmação paralela
-      ;(async function checkConfirmation() {
-        let confirmed = false
-        while (!confirmed) {
-          await new Promise((res) => setTimeout(res, 2000))
-          console.log('⏳ Verificando status da transação...')
-          confirmed = true // simulação
-        }
-        console.log(`🎉 Transação confirmada: ${signature}`)
-        await fetchGameData()
-        showToast({ type: 1, title: 'Sucesso', message: `Créditos comprados! Tx: ${signature}` })
-      })()
+      // Simulação de confirmação
+      await new Promise((res) => setTimeout(res, 3000))
+      await fetchGameData()
+
+      // Após atualizar, sincroniza ranking se necessário
+      if (nicknameRef.current && wallet.publicKey) {
+        const pubkey = wallet.publicKey.toBase58()
+        syncRanking(pubkey, nicknameRef.current, score)
+      }
+
+      showToast({ type: 1, title: 'Sucesso', message: `Créditos comprados! Tx: ${signature.slice(0, 8)}...` })
     } catch (err: any) {
       console.error('❌ Erro durante compra:', err)
       showToast({ type: 2, title: 'Erro', message: err.message || 'Erro ao comprar créditos' })
@@ -122,24 +149,18 @@ export default function DashboardFeature() {
       return
     }
     if (isPlaying) return
+
     setIsPlaying(true)
     setIsModalOpen(true)
     setResultMessage(null)
 
     try {
       console.log(`🔄 Iniciando jogada: escolha ${choice}...`)
-
       const { signature, logs } = await sendInstruction(wallet, choice)
       setTxLogs(logs)
 
-      // Confirmação simulada
-      let confirmed = false
-      while (!confirmed) {
-        await new Promise((res) => setTimeout(res, 2000))
-        confirmed = true
-      }
-
-      console.log(`🎉 Jogada confirmada: ${signature}`)
+      // Simulação de confirmação
+      await new Promise((res) => setTimeout(res, 3000))
 
       if (wallet.publicKey) {
         const data = await readPda(wallet.publicKey)
@@ -147,7 +168,13 @@ export default function DashboardFeature() {
         setScore(data.score)
         setHistory(data.history)
 
-        // Último resultado
+        // Atualiza ranking após jogada
+        if (nicknameRef.current && wallet.publicKey) {
+          const pubkey = wallet.publicKey.toBase58()
+          syncRanking(pubkey, nicknameRef.current, data.score)
+        }
+
+        // Resultado
         const lastGame = data.history[data.history.length - 1]
         let msg = "It's a draw!"
         if (lastGame.result === 0) msg = 'You lost!'
@@ -159,32 +186,24 @@ export default function DashboardFeature() {
     } catch (err: any) {
       console.error('❌ Erro durante jogada:', err)
       showToast({ type: 2, title: 'Error', message: err.message || 'Play failed' })
-      setIsModalOpen(false)
     } finally {
       setIsPlaying(false)
     }
   }
 
-  // Botões desabilitados se sem créditos ou jogada em andamento
   const buttonsDisabled = credits <= 0 || isPlaying
 
   const formatWallet = () => {
     if (!walletAddr) return ''
-    if (window.innerWidth <= 900) {
+    if (typeof window !== 'undefined' && window.innerWidth <= 900) {
       return walletAddr.slice(0, 4) + '....' + walletAddr.slice(-4)
     }
     return walletAddr
   }
 
-  const renderResult = (result: number) => (result === 0 ? '❌ Loss' : result === 1 ? '➖ Draw' : '✅ Victory')
+  const renderResult = (result: number) => 
+    result === 0 ? '❌ Loss' : result === 1 ? '➖ Draw' : '✅ Victory'
 
-  const sortedHistory = [...history].reverse()
-  const indexOfLast = currentPage * itemsPerPage
-  const indexOfFirst = indexOfLast - itemsPerPage
-  const currentHistory = sortedHistory.slice(indexOfFirst, indexOfLast)
-  const totalPages = Math.ceil(sortedHistory.length / itemsPerPage)
-  const historyLength = history?.length || 0
-  const currentLevel = calculateLevel(historyLength)
   return (
     <div>
       <div className="chat-header-cover bg-[#1b1b1b] border-b-2 border-b-zinc-800 custom-shadow-2 p-6 max-w-5xl mx-auto space-y-6">
@@ -194,36 +213,40 @@ export default function DashboardFeature() {
         {wallet.connected && (
           <div className="space-y-8">
             <div>
-              <div className="text-center  font-bold mb-2">
+              <div className="text-center font-bold mb-2">
                 {nickname ? (
-                 <div className='flex w-full bg-[#1b1b1b] bgpatternB '> 
+                  <div className='flex w-full bg-[#1b1b1b] bgpatternB'> 
                     <div className="flex gap-1.5 justify-center items-center mb-0 -mt-4">
-                      <div className='w-auto h-auto  bgsqr'>
-                       <MicahAvatar seed={walletAddr || nickname || 'default'} size={100} />
+                      <div className='w-auto h-auto bgsqr'>
+                        <MicahAvatar seed={walletAddr || nickname || 'default'} size={100} />
                       </div>
-                        <div>
+                      <div>
                         <p className='ggradgreen text-left mb-2 mt-auto text-xl sm:text-3xl'>
                           {nickname} The {titulo}
                         </p>
-                        <p className="text-left text-sm text-VerdeSolana-100 ">{formatWallet()}</p>
-                        </div>
+                        <p className="text-left text-sm text-VerdeSolana-100">{formatWallet()}</p>
+                      </div>
                     </div>  
-                    </div>
-                    ) : (
-                    <p>Loading</p>
-                  )}
+                  </div>
+                ) : (
+                  <p>Loading</p>
+                )}
               </div>
-            <LevelProgress historyLength={history?.length || 0} />
+              <LevelProgress historyLength={historyLength} />
             </div>
-            <div className="flex items-center space-x-5">
-              <div className="flex-1 text-center text-black font-bold h-30 w-full bg-amber-400 rounded-3xl">Level: {currentLevel}</div>
-              <p className="flex-1 text-center text-black font-bold h-30 w-full bg-blue-400 rounded-3xl custom-shadow-2">
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <div className="text-center text-black font-bold h-12 w-full sm:w-40 bg-amber-400 rounded-3xl flex items-center justify-center">
+                Level: {currentLevel}
+              </div>
+              <div className="text-center text-black font-bold h-12 w-full sm:w-40 bg-blue-400 rounded-3xl custom-shadow-2 flex items-center justify-center">
                 Credits: {credits}
-              </p>
-              <p className="flex-1 text-center text-black font-bold h-30 w-full bg-green-400 rounded-3xl custom-shadow-2">
-                Score {score}
-              </p>
+              </div>
+              <div className="text-center text-black font-bold h-12 w-full sm:w-40 bg-green-400 rounded-3xl custom-shadow-2 flex items-center justify-center">
+                Score: {score}
+              </div>
             </div>
+
             <button
               onClick={handleBuyCredit}
               disabled={credits > 0}
@@ -231,32 +254,29 @@ export default function DashboardFeature() {
             >
               Buy 5 Credits (0.01 SOL)
             </button>
+
             <div className="text-center space-x-4">
               <h3 className="font-semibold text-gray-700">Choose your move:</h3>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <button
-                  onClick={() => handlePlay(0)}
-                  disabled={buttonsDisabled}
-                  className="flex-1 px-4 py-2 bg-yellow-300 border-8 border-white btnsdc rounded-lg disabled:opacity-50"
-                >
-                  <Image src="/hands/armsRL.svg" alt="Rock" width={350} height={350} />
-                </button>
-                <button
-                  onClick={() => handlePlay(1)}
-                  disabled={buttonsDisabled}
-                  className="flex-1 px-4 py-2 bg-yellow-300 border-8 border-white btnsdc rounded-lg disabled:opacity-50"
-                >
-                  <Image src="/hands/armsPL.svg" alt="Paper" width={350} height={350} />
-                </button>
-                <button
-                  onClick={() => handlePlay(2)}
-                  disabled={buttonsDisabled}
-                  className="flex-1 px-4 py-2 bg-yellow-300 border-8 border-white btnsdc rounded-lg disabled:opacity-50"
-                >
-                  <Image src="/hands/armsSL.svg" alt="Scissor" width={350} height={350} />
-                </button>
+                {[0, 1, 2].map((choice) => (
+                  <button
+                    key={choice}
+                    onClick={() => handlePlay(choice)}
+                    disabled={buttonsDisabled}
+                    className="flex-1 px-2 py-2 bg-yellow-300 border-4 border-white btnsdc rounded-lg disabled:opacity-50"
+                  >
+                    <Image 
+                      src={`/hands/arms${['R', 'P', 'S'][choice]}L.svg`} 
+                      alt={['Rock', 'Paper', 'Scissors'][choice]} 
+                      width={120} 
+                      height={120} 
+                      className="mx-auto"
+                    />
+                  </button>
+                ))}
               </div>
             </div>
+
             <div className="bg-[#222222] rounded-xl shadow p-4">
               <h3 className="font-semibold mb-2 text-gray-700 gen-chat">Journey</h3>
               {history.length === 0 ? (
@@ -323,6 +343,7 @@ export default function DashboardFeature() {
           </div>
         )}
       </div>
+
       {/* Modal do jogo */}
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <DialogContent className="bg-[#1b1b1b] text-center text-white rounded-lg">
