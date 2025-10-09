@@ -14,7 +14,7 @@ import { MicahAvatar } from '../ui/micah-avatar'
 import { LevelProgress } from '../app-levelprogress'
 import { calculateLevel } from '@/lib/levelUtils'
 import { useSyncRanking } from '@/lib/useSyncRanking' // ✅ hook de ranking
-
+import { Leaderboard } from '../app-leadboard'
 interface HistoryRecord {
   player: number
   program: number
@@ -209,7 +209,7 @@ export default function DashboardFeature() {
       <div className="chat-header-cover bg-[#1b1b1b] border-b-2 border-b-zinc-800 custom-shadow-2 p-6 max-w-5xl mx-auto space-y-6">
         <TopCont />
         <MainSlider />
-      
+        <Leaderboard />
         {wallet.connected && (
           <div className="space-y-8">
             <div>

@@ -17,27 +17,32 @@ export function Leaderboard() {
   const [rankings, setRankings] = useState<RankingEntry[]>([])
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    
-    const fetchRankings = async () => {
-      try {
-        const {  error } = await supabase
-          .from('rankings')
-          .select('*')
-          .order('score', { ascending: false })
-          .limit(10)
+useEffect(() => {
+  const fetchRankings = async () => {
+    try {
+      // ✅ Não use desestruturação — use a resposta inteira
+      const response = await supabase
+        .from('rankings')
+        .select('*')
+        .order('score', { ascending: false })
+        .limit(10)
 
-        if (error) throw error
-        setRankings(data || [])
-      } catch (err) {
-        console.error('Erro ao buscar ranking:', err)
-      } finally {
-        setLoading(false)
+      // ✅ Acesse data e error diretamente de response
+      if (response.error) {
+        throw response.error
       }
-    }
 
-    fetchRankings()
-  }, [])
+      // ✅ response.data sempre existe (pode ser array vazio)
+      setRankings(response.data || [])
+    } catch (err) {
+      console.error('Erro ao buscar ranking:', err)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  fetchRankings()
+}, [])
 
   const getRankIcon = (index: number) => {
     if (index === 0) return <Crown className="h-5 w-5 text-yellow-500" />
@@ -54,8 +59,8 @@ export function Leaderboard() {
   }
 
   return (
-    <div className="w-full max-w-2xl mx-auto">
-      <div className="text-center mb-8">
+    <div className="w-full mx-auto">
+      <div className="text-center mb-4">
         <h2 className="text-2xl font-bold tracking-tight">Leaderboard</h2>
         <p className="text-muted-foreground mt-2">Top players by score</p>
       </div>
@@ -70,8 +75,8 @@ export function Leaderboard() {
         <div className="space-y-3">
           {rankings.length > 0 ? (
             rankings.map((player, index) => (
-              <Card key={player.id} className="bg-[#1a1a1b] border-gray-800 hover:border-gray-700 transition">
-                <CardContent className="p-4 flex items-center gap-4">
+              <Card key={player.id} className="bg-[#1a1a1b] w-full border-gray-800 hover:border-gray-700 transition">
+                <CardContent className="p-2 flex items-center gap-4">
                   <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-800">
                     {getRankIcon(index)}
                   </div>
