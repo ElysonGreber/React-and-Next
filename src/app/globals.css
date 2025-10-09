@@ -684,3 +684,32 @@
 .gradhead {
     background: linear-gradient(180deg, #353535 0%, #222222 100%);
     }
+
+.newSlide{
+  transform: translate(100%, 0);
+  opacity: 0;
+}
+
+.fObject{
+  backdrop-filter:blur(5.5px);
+  clip-path:url(#bgblur_0_6_44_clip_path);
+  height:100%;
+  width:100%
+}
+
+
+.sl0{
+  background-image: url(https://assets.codepen.io/3685267/betting-app-wccettuo.png);
+  
+}
+.sl1{
+  background-image: 
+    linear-gradient(90deg, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0.65) 50%, rgba(0, 0, 0, 0) 100%), 
+  url(https://assets.codepen.io/3685267/betting-app-vgnrodzy.png);
+}
+.sl2{
+  background-image: url(https://assets.codepen.io/3685267/betting-app-zzbnyktk.png);
+}
+.sl3{
+  background-image: url(https://assets.codepen.io/3685267/betting-app-ahiryyst.png);
+}
