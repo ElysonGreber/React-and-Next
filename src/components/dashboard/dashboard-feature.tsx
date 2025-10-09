@@ -9,7 +9,7 @@ import Image from 'next/image'
 import { supabase } from '@/lib/supabaseClient'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { MicahAvatar } from '../ui/micah-avatar'
-
+import { LevelProgress } from '../app-levelprogress'
 interface HistoryRecord {
   player: number
   program: number
@@ -188,6 +188,7 @@ export default function DashboardFeature() {
       <div className="chat-header-cover bg-[#1b1b1b] border-b-2 border-b-zinc-800 custom-shadow-2 p-6 max-w-5xl mx-auto space-y-6">
         <TopCont />
         <MainSlider />
+        <LevelProgress historyLength={history?.length || 0} />
         {wallet.connected && (
           <div className="space-y-8">
             <div>
