@@ -3,7 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { Check } from 'lucide-react'
 
-const LEVEL_THRESHOLDS = [5, 10, 15, 25, 35, 50, 70, 90, 110, 130] // 10 níveis
+const LEVEL_THRESHOLDS = [5, 10, 15, 25, 35, 50, 70, 90, 110, 130]
 
 interface LevelProgressProps {
   historyLength: number
@@ -16,7 +16,7 @@ export function LevelProgress({ historyLength }: LevelProgressProps) {
 
   return (
     <div className="w-full max-w-3xl mx-auto px-4 py-8">
-      {/* Container da barra + círculos */}
+      {/* Container relativo para sobreposição */}
       <div className="relative">
         {/* Barra de progresso */}
         <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
@@ -28,14 +28,14 @@ export function LevelProgress({ historyLength }: LevelProgressProps) {
           />
         </div>
 
-        {/* Círculos de nível (centralizados exatamente na barra) */}
-        <div className="flex justify-between absolute top-1/2 left-0 right-0 -translate-y-1/2">
+        {/* Camada dos CÍRCULOS (só os círculos, sem texto) */}
+        <div className="flex justify-between absolute top-1/2 left-0 right-0 -translate-y-1/2 pointer-events-none">
           {LEVEL_THRESHOLDS.map((_, index) => {
             const level = index + 1
             const isUnlocked = level <= currentLevel
 
             return (
-              <div key={level} className="flex flex-col items-center">
+              <div key={level} className="flex items-center justify-center">
                 <div
                   className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all duration-500 ${
                     isUnlocked
@@ -68,23 +68,24 @@ export function LevelProgress({ historyLength }: LevelProgressProps) {
                     )}
                   </AnimatePresence>
                 </div>
-
-                {/* Label do nível (só em telas maiores) */}
-                <span className="mt-2 text-xs text-gray-500 hidden sm:block">
-                  Lvl {level}
-                </span>
               </div>
             )
           })}
         </div>
       </div>
-
-      {/* Nível atual */}
-      <div className="text-center mt-6">
-        <span className="text-sm font-medium text-gray-700">
-          Level: <span className="text-green-600 font-bold">{currentLevel}</span> / {maxLevel}
-        </span>
-      </div>
+      {/* <div className="flex justify-between mt-6">
+        {LEVEL_THRESHOLDS.map((_, index) => {
+          const level = index + 1
+          return (
+            <span
+              key={level}
+              className="text-xs text-gray-500 text-center w-6"
+            >
+              Lvl {level}
+            </span>
+          )
+        })}
+      </div> */}
     </div>
   )
 }

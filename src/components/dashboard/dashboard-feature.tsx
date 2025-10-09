@@ -10,6 +10,7 @@ import { supabase } from '@/lib/supabaseClient'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { MicahAvatar } from '../ui/micah-avatar'
 import { LevelProgress } from '../app-levelprogress'
+import { calculateLevel, LEVEL_THRESHOLDS } from '@/lib/levelUtils'
 interface HistoryRecord {
   player: number
   program: number
@@ -182,13 +183,14 @@ export default function DashboardFeature() {
   const indexOfFirst = indexOfLast - itemsPerPage
   const currentHistory = sortedHistory.slice(indexOfFirst, indexOfLast)
   const totalPages = Math.ceil(sortedHistory.length / itemsPerPage)
-
+  const historyLength = history?.length || 0
+  const currentLevel = calculateLevel(historyLength)
   return (
     <div>
       <div className="chat-header-cover bg-[#1b1b1b] border-b-2 border-b-zinc-800 custom-shadow-2 p-6 max-w-5xl mx-auto space-y-6">
         <TopCont />
         <MainSlider />
-        <LevelProgress historyLength={history?.length || 0} />
+      
         {wallet.connected && (
           <div className="space-y-8">
             <div>
@@ -211,9 +213,10 @@ export default function DashboardFeature() {
                     <p>Loading</p>
                   )}
               </div>
+            <LevelProgress historyLength={history?.length || 0} />
             </div>
             <div className="flex items-center space-x-5">
-              <div className="flex-1 text-center text-black font-bold h-30 w-full bg-amber-400 rounded-3xl">Level</div>
+              <div className="flex-1 text-center text-black font-bold h-30 w-full bg-amber-400 rounded-3xl">Level: {currentLevel}</div>
               <p className="flex-1 text-center text-black font-bold h-30 w-full bg-blue-400 rounded-3xl custom-shadow-2">
                 Credits: {credits}
               </p>
@@ -275,10 +278,10 @@ export default function DashboardFeature() {
                           <tr key={i} className="text-center">
                             <td className="px-3 py-2">{indexOfFirst + i + 1}</td>
                             <td className="px-3 py-2">
-                              {h.player === 0 ? '✊ Rock' : h.player === 1 ? '🖐 Paper' : '✌ Scissors'}
+                              {h.player === 0 ? 'Rock' : h.player === 1 ? 'Paper' : 'Scissors'}
                             </td>
                             <td className="px-3 py-2">
-                              {h.program === 0 ? '✊ Rock' : h.program === 1 ? '🖐 Paper' : '✌ Scissors'}
+                              {h.program === 0 ? 'Rock' : h.program === 1 ? 'Paper' : 'Scissors'}
                             </td>
                             <td className="px-3 py-2">{renderResult(h.result)}</td>
                           </tr>
