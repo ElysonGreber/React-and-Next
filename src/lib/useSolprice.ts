@@ -1,3 +1,4 @@
+//workspaces/solgamereact/src/lib/useSolprice.ts
 import { useEffect, useState } from 'react'
 
 export function useSolPrice() {

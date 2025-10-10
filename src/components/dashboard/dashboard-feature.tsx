@@ -15,7 +15,8 @@ import { LevelProgress } from '../app-levelprogress'
 import { calculateLevel } from '@/lib/levelUtils'
 import { useSyncRanking } from '@/lib/useSyncRanking' // ✅ hook de ranking
 import { Leaderboard } from '../app-leadboard'
-import { CircleChevronRightIcon, CircleChevronLeftIcon } from '@/components/ui/iconmove'
+import { CircleChevronRightIcon, CircleChevronLeftIcon } from '@/components/ui/icon-move'
+import { number } from 'framer-motion'
 
 // ==========================================================================================================
 
@@ -111,6 +112,15 @@ export default function DashboardFeature() {
       loadAll()
     }
   }, [wallet.connected, wallet.publicKey, fetchGameData, fetchUserProfile, syncRanking, score])
+
+  useEffect(() => {
+  const updateSize = () => {
+    setAvatarSize(window.innerWidth < 640 ? 70 : window.innerWidth < 1024 ? 90 : 150)
+  }
+  updateSize()
+  window.addEventListener('resize', updateSize)
+  return () => window.removeEventListener('resize', updateSize)
+}, [])
   // ==========================================================================================================
   // ----- FLUXO COMPRA CRÉDITO -----
   const handleBuyCredit = async () => {
@@ -186,31 +196,41 @@ export default function DashboardFeature() {
     }
     return walletAddr
   }
+   
   // ==========================================================================================================
   const renderResult = (result: number) =>
     result === 0 ? 'Loss' : result === 1 ? 'Draw' : 'Victory'
   // ==========================================================================================================  
+  const [avatarSize, setAvatarSize] = useState(150)
   return (
     <div>
       <div className="chat-header-cover bg-[#1b1b1b] border-b-2 border-b-zinc-800 custom-shadow-2 p-6 max-w-5xl mx-auto space-y-6">
         <TopCont />
         <MainSlider />
-        <Leaderboard />
+        
         {wallet.connected && (
           <div className="space-y-8">
             <div>
               <div className="text-center font-bold mb-2">
                 {nickname ? (
-                  <div className='flex w-full bg-[#1b1b1b] bgpatternB'>
-                    <div className="flex gap-1.5 justify-center items-center mb-0 -mt-4">
+                  <div className='flex justify-between w-full bg-[#1b1b1b] bgpatternB'>
+                    <div className="flex gap-1.5 justify-center items-center mb-0 -mt-2 sm:-mt-8">
                       <div className='w-auto h-auto bgsqr'>
-                        <MicahAvatar seed={walletAddr || nickname || 'default'} size={100} />
+                        <MicahAvatar seed={walletAddr || nickname || 'default'} size={avatarSize} />
                       </div>
                       <div>
-                        <p className='ggradgreen text-left mb-2 mt-auto text-xl sm:text-3xl'>
+                        <p className='ggradgreen text-left text-sm mb-0 sm:text-3xl sm:mb-2 sm:mt-5'>
                           {nickname} The {titulo}
                         </p>
-                        <p className="text-left text-sm text-VerdeSolana-100">{formatWallet()}</p>
+                        <p className="text-left text-xs text-VerdeSolana-100 sm:text-sm">{formatWallet()}</p>
+                      </div>
+                    </div>
+                    <div>
+                     <div>
+                      Level: {currentLevel}
+                      </div> 
+                      <div>
+                        Score: {score}
                       </div>
                     </div>
                   </div>
@@ -323,6 +343,7 @@ export default function DashboardFeature() {
                       <CircleChevronRightIcon />
                     </button>
                   </div>
+                  <Leaderboard />
                 </>
               )}
             </div>

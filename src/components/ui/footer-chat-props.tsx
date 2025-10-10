@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { createAvatar } from '@dicebear/core'
 import { micah } from '@dicebear/collection'
-
+import { MessageCircleIcon, XIcon } from './icon-move'
 interface ChatMessage {
   user: string
   text: string
@@ -68,7 +68,7 @@ export default function FooterChat({ wsUrl, nickname, walletAddress }: FooterCha
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     }
     wsRef.current.send(JSON.stringify(msg))
-    setMessages((prev) => [...prev, msg]) // mostra imediatamente para o próprio usuário
+    setMessages((prev) => [...prev, msg])
     setMessageInput('')
   }
 
@@ -86,10 +86,10 @@ export default function FooterChat({ wsUrl, nickname, walletAddress }: FooterCha
   if (!isOpen) {
     return (
       <div
-        className="fixed bottom-2 right-2 cursor-pointer p-2 bg-black rounded-full text-white z-50"
+        className="fixed bottom-2 right-2 cursor-pointer p-2 bg-black rounded-full text-VerdeSolana-300 z-50"
         onClick={() => setIsOpen(true)}
       >
-        Open Chat
+        <MessageCircleIcon />
       </div>
     )
   }
@@ -97,12 +97,12 @@ export default function FooterChat({ wsUrl, nickname, walletAddress }: FooterCha
   return (
     <div
       ref={chatRef}
-      className="fixed bottom-0 right-0 w-100 max-w-full h-96 bg-[#1b1b1b] text-white rounded-t-lg shadow-lg flex flex-col z-50"
+      className="fixed bottom-0 right-0 w-100 max-w-full h-96 bg-[#1b1b1bc2] text-white rounded-t-lg shadow-lg flex flex-col z-50"
     >
       <div className="flex items-center justify-between p-2 bg-[#111] border-b border-gray-700">
         <span className="font-bold">Chat</span>
-        <button onClick={() => setIsOpen(false)} className="text-blue-300 font-bold">
-          X
+        <button onClick={() => setIsOpen(false)} className="text-blue-300 font-bold text-sm">
+          <XIcon size={20}/>
         </button>
       </div>
 

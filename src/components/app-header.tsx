@@ -8,6 +8,7 @@ import { Menu, X } from 'lucide-react'
 import { ClusterUiSelect } from './cluster/cluster-ui'
 import { WalletButton } from '@/components/dashboard/ui/solana/solana-provider'
 import { useUserProfile } from './ui/usermenu'
+import { TwitchIcon, InstagramIcon, TwitterIcon } from './ui/icon-move'
 
 export function AppHeader({ links = [] }: { links: { label: string; path: string }[] }) {
   const { nick2, tt2, loading } = useUserProfile()
@@ -19,7 +20,7 @@ export function AppHeader({ links = [] }: { links: { label: string; path: string
   }
 
   return (
-    <header className="relative z-50 px-4 py-2 bg-neutral-100 dark:bg-neutral-900 dark:text-neutral-400">
+    <header className="relative z-50 px-4 py-2  sdw-elv-high bg-neutral-100 dark:bg-neutral-900 dark:text-neutral-400">
       <div className="mx-auto flex justify-between items-center">
         <div className="flex items-baseline gap-4">
           <Link className="text-xl hover:text-neutral-500 dark:hover:text-white" href="/">
@@ -34,9 +35,14 @@ export function AppHeader({ links = [] }: { links: { label: string; path: string
                     href={path}
                   >
                     {label}
+                    
                   </Link>
+                  
                 </li>
               ))}
+              <TwitchIcon size={20}/>
+              <TwitterIcon size={20}/>
+              <InstagramIcon size={20}/>
             </ul>
           </div>
         </div>
