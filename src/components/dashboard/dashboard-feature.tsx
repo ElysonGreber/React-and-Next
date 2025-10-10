@@ -28,6 +28,7 @@ interface HistoryRecord {
 // ==========================================================================================================
 
 export default function DashboardFeature() {
+
   const [nickname, setNickname] = useState<string | null>(null)
   const [walletAddr, setWalletAddr] = useState<string | null>(null)
   const [titulo, setTitulo] = useState<string | null>(null)
@@ -54,7 +55,6 @@ export default function DashboardFeature() {
   const { syncRanking } = useSyncRanking() // ✅ hook externo
 
   // ==========================================================================================================
-
   // --- Fetch Game Data ---
   const fetchGameData = useCallback(async () => {
     if (wallet.publicKey) {
@@ -68,7 +68,6 @@ export default function DashboardFeature() {
       }
     }
   }, [wallet.publicKey])
-
   // ========================================================================================================== 
   // --- Fetch User Profile ---
   const fetchUserProfile = useCallback(async () => {
