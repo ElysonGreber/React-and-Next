@@ -194,9 +194,24 @@ export default function DashboardFeature() {
     if (typeof window !== 'undefined' && window.innerWidth <= 900) {
       return walletAddr.slice(0, 4) + '....' + walletAddr.slice(-4)
     }
-    return walletAddr
   }
-   
+  const [playerRank, setPlayerRank] = useState<{
+    rank: number | null
+    nickname: string
+    score: number
+    isInRanking: boolean
+  } | null>(null)
+  const fetchPlayerRank = useCallback(async () => {
+    if (walletAddr) {
+      const rankData = await getPlayerRank(walletAddr)
+      setPlayerRank(rankData)
+    }
+  }, [walletAddr])
+  useEffect(() => {
+    if (walletAddr) {
+      fetchPlayerRank()
+    }
+  }, [walletAddr, fetchPlayerRank])
   // ==========================================================================================================
   const renderResult = (result: number) =>
     result === 0 ? 'Loss' : result === 1 ? 'Draw' : 'Victory'
@@ -232,6 +247,30 @@ export default function DashboardFeature() {
                       <div>
                         Score: {score}
                       </div>
+                    </div>
+                    <div className="flex flex-row justify-around w-full rounded-b-3xl text-VerdeSolana-200 bg-[#00000080] sm:hidden">
+                      
+                        <div className="w-15 h-auto ">
+                          <p>Lvl. {currentLevel}</p>
+                        </div>
+                        <div className="w-auto h-auto ">
+                          <p>Score: {score}</p>
+                        </div>
+                        <div>
+                          <div className="flex flex-row content-center  w-auto h-auto ">
+                            <p>Rank:</p>
+                            {playerRank && (
+                              <div className="flex flex-row content-center  justify-center justify-items-center gap-1">
+                                {playerRank.isInRanking ? (
+                                  <span className="font-medium">{playerRank.rank}</span>
+                                ) : (
+                                  <span className="text-gray-500">0</span>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      
                     </div>
                   </div>
                 ) : (
