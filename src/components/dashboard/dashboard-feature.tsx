@@ -21,6 +21,8 @@ interface HistoryRecord {
   result: number
 }
 
+import { CircleChevronRightIcon ,CircleChevronLeftIcon } from '@/components/ui/iconmove'
+
 export default function DashboardFeature() {
   const [nickname, setNickname] = useState<string | null>(null)
   const [walletAddr, setWalletAddr] = useState<string | null>(null)
@@ -322,9 +324,9 @@ export default function DashboardFeature() {
                     <button
                       onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
                       disabled={currentPage === 1}
-                      className="px-3 py-1 bg-gray-700 text-white rounded disabled:opacity-50"
+                      className="px-3 py-1  rounded disabled:opacity-50"
                     >
-                      Previous
+                      <CircleChevronLeftIcon />
                     </button>
                     <span className="text-sm text-gray-400">
                       Page {currentPage} of {totalPages}
@@ -332,9 +334,9 @@ export default function DashboardFeature() {
                     <button
                       onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
                       disabled={currentPage === totalPages}
-                      className="px-3 py-1 bg-gray-700 text-white rounded disabled:opacity-50"
+                      className="px-3 py-1  rounded disabled:opacity-50"
                     >
-                      Next
+                      <CircleChevronRightIcon />
                     </button>
                   </div>
                 </>
