@@ -246,7 +246,7 @@ export default function DashboardFeature() {
                       </div>
                       <div className=" items-center hidden sm:flex">
                         <div className="flex flex-col content-center justify-items-center bg-green-300 w-15 h-15 ">
-                          <p>LVL</p>
+                          <p>Lvl</p>
                           <div className="flex flex-row content-center  justify-center justify-items-center gap-1">
                             {currentLevel}
                           </div>
