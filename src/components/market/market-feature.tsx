@@ -1,6 +1,5 @@
 "use client";
-
-
+import  CryptoTable from "./crypto-market"
 import Anthropic from "@/components/kokonutui/anthropic";
 import AnthropicDark from "@/components/kokonutui/anthropic-dark";
 import Google from "@/components/kokonutui/gemini";
@@ -231,6 +230,7 @@ const ChartAnimation = ({ value }: { value: number }) => {
 
 const IconsFeature = () => {
     return (
+
         <div className="grid grid-cols-3 gap-4 mt-4">
             <motion.div className="flex flex-col items-center gap-2 p-3 rounded-xl bg-gradient-to-b from-neutral-100/80 to-neutral-100 dark:from-neutral-800/80 dark:to-neutral-800 border border-neutral-200/50 dark:border-neutral-700/50 group transition-all duration-300 hover:border-neutral-300 dark:hover:border-neutral-600">
                 <div className="relative w-8 h-8 flex items-center justify-center">
@@ -715,6 +715,8 @@ const BentoCard = ({ item }: { item: BentoItem }) => {
 
 export default function BentoGrid() {
     return (
+        <>
+        <CryptoTable />
         <section className="relative py-4 sm:py-4 bg-white dark:bg-[#0a0a0a] overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Bento Grid */}
@@ -769,5 +771,6 @@ export default function BentoGrid() {
                 </motion.div>
             </div>
         </section>
+        </>
     );
 }

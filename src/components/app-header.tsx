@@ -7,8 +7,11 @@ import { Menu, X } from 'lucide-react'
 // import { ThemeSelect } from '@/components/theme-select'
 import { ClusterUiSelect } from './cluster/cluster-ui'
 import { WalletButton } from '@/components/dashboard/ui/solana/solana-provider'
+import { useUserProfile } from './ui/usermenu'
+import { TwitchIcon, InstagramIcon, TwitterIcon } from './ui/icon-move'
 
 export function AppHeader({ links = [] }: { links: { label: string; path: string }[] }) {
+  const { nick2, tt2, loading } = useUserProfile()
   const pathname = usePathname()
   const [showMenu, setShowMenu] = useState(false)
 
@@ -17,8 +20,7 @@ export function AppHeader({ links = [] }: { links: { label: string; path: string
   }
 
   return (
-    
-    <header className="relative z-50 px-4 py-2 bg-neutral-100 dark:bg-neutral-900 dark:text-neutral-400">
+    <header className="relative z-50 px-4 py-2  sdw-elv-high bg-neutral-100 dark:bg-neutral-900 dark:text-neutral-400">
       <div className="mx-auto flex justify-between items-center">
         <div className="flex items-baseline gap-4">
           <Link className="text-xl hover:text-neutral-500 dark:hover:text-white" href="/">
@@ -33,9 +35,14 @@ export function AppHeader({ links = [] }: { links: { label: string; path: string
                     href={path}
                   >
                     {label}
+                    
                   </Link>
+                  
                 </li>
               ))}
+              <TwitchIcon size={20}/>
+              <TwitterIcon size={20}/>
+              <InstagramIcon size={20}/>
             </ul>
           </div>
         </div>
@@ -44,7 +51,10 @@ export function AppHeader({ links = [] }: { links: { label: string; path: string
           {showMenu ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </Button>
 
-        <div className="hidden md:flex items-center gap-4">
+        <div className="hidden md:flex items-center gap-4 ">
+          <div>
+                    <h1 className='font-semibold text-[#ed9803] gradhead p-2 rounded-md'>{nick2}</h1>
+                </div>
           <WalletButton />
           <ClusterUiSelect />
           {/* <ThemeSelect /> */}
@@ -68,9 +78,12 @@ export function AppHeader({ links = [] }: { links: { label: string; path: string
               </ul>
               <div className="flex flex-col gap-4">
                 
+                <div>
+                    <h1 className='font-semibold text-[#ed9803]'>{nick2 || 'Sem nome'} the {tt2}</h1>
+                </div>
                 <WalletButton />
                 <ClusterUiSelect />
-                
+
                 {/* <ThemeSelect /> */}
               </div>
             </div>
