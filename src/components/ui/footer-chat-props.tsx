@@ -20,7 +20,7 @@ export default function FooterChat({ wsUrl, nickname, walletAddress }: FooterCha
   const [messages, setMessages] = useState<ChatMessage[]>([])
   const [messageInput, setMessageInput] = useState('')
   const [avatar, setAvatar] = useState<string>('')
-  const [isOpen, setIsOpen] = useState(true)
+  const [isOpen, setIsOpen] = useState(false)
   const wsRef = useRef<WebSocket | null>(null)
   const chatRef = useRef<HTMLDivElement>(null)
 

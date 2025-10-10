@@ -669,7 +669,7 @@
     background-blend-mode: normal;
     background-size: 15rem;
     background-position-y: -22px;
-    border-radius: 20px;
+    /* border-radius: 20px; */
     border-bottom: 1px solid #c36bee6e;
 }
 

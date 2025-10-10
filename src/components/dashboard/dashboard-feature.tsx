@@ -16,8 +16,8 @@ import { calculateLevel } from '@/lib/levelUtils'
 import { useSyncRanking } from '@/lib/useSyncRanking' // ✅ hook de ranking
 import { Leaderboard } from '../app-leadboard'
 import { CircleChevronRightIcon, CircleChevronLeftIcon } from '@/components/ui/icon-move'
-import { number } from 'framer-motion'
-
+import { getPlayerRank } from '@/lib/rankingUtils'
+import { Star, Medal, Rocket } from 'lucide-react'
 // ==========================================================================================================
 
 interface HistoryRecord {
@@ -25,11 +25,9 @@ interface HistoryRecord {
   program: number
   result: number
 }
-
 // ==========================================================================================================
 
 export default function DashboardFeature() {
-
   const [nickname, setNickname] = useState<string | null>(null)
   const [walletAddr, setWalletAddr] = useState<string | null>(null)
   const [titulo, setTitulo] = useState<string | null>(null)
@@ -69,7 +67,7 @@ export default function DashboardFeature() {
       }
     }
   }, [wallet.publicKey])
-  // ========================================================================================================== 
+  // ==========================================================================================================
   // --- Fetch User Profile ---
   const fetchUserProfile = useCallback(async () => {
     if (wallet.publicKey) {
@@ -104,7 +102,7 @@ export default function DashboardFeature() {
       const loadAll = async () => {
         await fetchGameData()
         await fetchUserProfile()
-        // Sincroniza ranking após carregar tudo 
+        // Sincroniza ranking após carregar tudo
         if (nicknameRef.current) {
           syncRanking(pubkey, nicknameRef.current, score)
         }
@@ -114,13 +112,13 @@ export default function DashboardFeature() {
   }, [wallet.connected, wallet.publicKey, fetchGameData, fetchUserProfile, syncRanking, score])
 
   useEffect(() => {
-  const updateSize = () => {
-    setAvatarSize(window.innerWidth < 640 ? 70 : window.innerWidth < 1024 ? 90 : 150)
-  }
-  updateSize()
-  window.addEventListener('resize', updateSize)
-  return () => window.removeEventListener('resize', updateSize)
-}, [])
+    const updateSize = () => {
+      setAvatarSize(window.innerWidth < 640 ? 100 : window.innerWidth < 1024 ? 90 : 150)
+    }
+    updateSize()
+    window.addEventListener('resize', updateSize)
+    return () => window.removeEventListener('resize', updateSize)
+  }, [])
   // ==========================================================================================================
   // ----- FLUXO COMPRA CRÉDITO -----
   const handleBuyCredit = async () => {
@@ -191,7 +189,7 @@ export default function DashboardFeature() {
   // ==========================================================================================================
   const formatWallet = () => {
     if (!walletAddr) return ''
-    if (typeof window !== 'undefined' && window.innerWidth <= 900) {
+    else {
       return walletAddr.slice(0, 4) + '....' + walletAddr.slice(-4)
     }
   }
@@ -213,39 +211,70 @@ export default function DashboardFeature() {
     }
   }, [walletAddr, fetchPlayerRank])
   // ==========================================================================================================
-  const renderResult = (result: number) =>
-    result === 0 ? 'Loss' : result === 1 ? 'Draw' : 'Victory'
-  // ==========================================================================================================  
+  const renderResult = (result: number) => (result === 0 ? 'Loss' : result === 1 ? 'Draw' : 'Victory')
+  // ==========================================================================================================
+
   const [avatarSize, setAvatarSize] = useState(150)
+
   return (
     <div>
       <div className="chat-header-cover bg-[#1b1b1b] border-b-2 border-b-zinc-800 custom-shadow-2 p-6 max-w-5xl mx-auto space-y-6">
-        <TopCont />
         <MainSlider />
-        
+        <TopCont />
+
         {wallet.connected && (
           <div className="space-y-8">
             <div>
               <div className="text-center font-bold mb-2">
                 {nickname ? (
-                  <div className='flex justify-between w-full bg-[#1b1b1b] bgpatternB'>
-                    <div className="flex gap-1.5 justify-center items-center mb-0 -mt-2 sm:-mt-8">
-                      <div className='w-auto h-auto bgsqr'>
-                        <MicahAvatar seed={walletAddr || nickname || 'default'} size={avatarSize} />
+                  <div className="flex flex-col bg-[#1b1b1b] rounded-3xl custom-shadow-1 bgpatternB">
+                    <div className="flex justify-between w-full ">
+                      <div className="flex gap-1.5 justify-center items-center mb-0 -mt-5 sm:-mt-8">
+                        <div className="w-auto h-auto bgsqr">
+                          <MicahAvatar seed={walletAddr || nickname || 'default'} size={avatarSize} />
+                        </div>
+                        <div className="flex items-center">
+                          <div>
+                            <div className="flex flex-col content-center justify-items-center">
+                              <p className="ggradgreen text-left text-lg mb-0  sm:text-3xl sm:mb-2 sm:mt-5">
+                                {nickname} The {titulo}
+                              </p>
+                              <p className="text-left text-xs text-VerdeSolana-100 sm:text-sm">{formatWallet()}</p>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                      <div>
-                        <p className='ggradgreen text-left text-sm mb-0 sm:text-3xl sm:mb-2 sm:mt-5'>
-                          {nickname} The {titulo}
-                        </p>
-                        <p className="text-left text-xs text-VerdeSolana-100 sm:text-sm">{formatWallet()}</p>
-                      </div>
-                    </div>
-                    <div>
-                     <div>
-                      Level: {currentLevel}
-                      </div> 
-                      <div>
-                        Score: {score}
+                      <div className=" items-center hidden sm:flex">
+                        <div className="flex flex-col content-center justify-items-center bg-green-300 w-15 h-15 ">
+                          <p>LVL</p>
+                          <div className="flex flex-row content-center  justify-center justify-items-center gap-1">
+                            {currentLevel}
+                          </div>
+                        </div>
+                        <div>
+                          <div className="flex flex-col content-center justify-items-center bg-red-300 w-15 h-15  ">
+                            <p>Score</p>
+                            <div className="flex flex-row content-center  justify-center justify-items-center gap-1">
+                              {score}
+                            </div>
+                          </div>
+                        </div>
+                        <div>
+                          <div className="flex flex-col content-center bg-AmberSolana-400 w-15 h-15 ">
+                            <p>Rank</p>
+                            <div className="inline-block">
+                              {playerRank && (
+                                <div className="flex flex-row content-center  justify-center justify-items-center gap-1">
+                                  {playerRank.isInRanking ? (
+                                    <span className="text-VerdeSolana-200 font-medium">{playerRank.rank}</span>
+                                  ) : (
+                                    <span className="text-gray-500">0</span>
+                                  )}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                     <div className="flex flex-row justify-around w-full rounded-b-3xl text-VerdeSolana-200 bg-[#00000080] sm:hidden">
