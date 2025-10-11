@@ -54,7 +54,32 @@ O que começou como uma simples ideia se tornou uma jornada prática de aprendiz
 ---
 
 ### ✨ Sobre o Projeto
-Mais do que apenas um jogo, este é o meu **primeiro aplicativo blockchain full-stack**, desenvolvido do zero como um desafio pessoal para entender como **React** e **Rust** podem trabalhar juntos para criar algo significativo, interativo e descentralizado.  
+Mais do que apenas um jogo, este é o meu **primeiro aplicativo blockchain full-stack**, desenvolvido do zero como um desafio pessoal para entender como **React** e **Rust** podem trabalhar juntos para criar algo significativo, interativo e descentralizado. 
+
+---
+<br>
+
+[Templates oficiais da Solana](https://github.com/solana-foundation/templates)
+<br>
+
+Ponto de partida:
+---
+
+```bash
+
+# npm
+npm create solana-dapp@latest
+
+# pnpm
+pnpm create solana-dapp@latest
+
+# bun
+bun create solana-dapp@latest
+
+# yarn (only supports the 'latest' tag)
+yarn create solana-dapp
+```
+---
 
 ```bash
 ├── Diagram
