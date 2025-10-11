@@ -1,3 +1,10 @@
+<br>
+<img src="./public/tokenpo.svg" alt="Logo" width="600"/>
+<br>
+
+A Simple Solana Rock Paper Scissors game.
+Program deployed on Devnet.
+
 My first React App - Solana Integratio
 
 ```bash
@@ -166,4 +173,3 @@ My first React App - Solana Integratio
 │       └── react-three-fiber.d.ts
 ├── tailwind.config.js
 └── tsconfig.json
-```bash
