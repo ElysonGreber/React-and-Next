@@ -244,29 +244,33 @@ export default function DashboardFeature() {
                           </div>
                         </div>
                       </div>
-                      <div className=" items-center hidden sm:flex">
-                        <div className="flex flex-col content-center justify-items-center bg-green-300 w-15 h-15 ">
-                          <p>Lvl</p>
-                          <div className="flex flex-row content-center  justify-center justify-items-center gap-1">
+                      <div className=" items-center hidden text-VerdeSolana-200 sm:flex">
+                          <div className="flex flex-col justify-center p-[2px]  w-15 h-full bg-[#00000066]">
+                          <p className='border-b-2 border-solid border-VerdeSolana-200'>Credits</p>
+                          <div className="flex flex-row content-center text-2xl justify-center justify-items-center gap-1">
+                            {credits}
+                          </div>
+                        </div>
+                        <div className="flex flex-col justify-center p-[2px]  w-15 h-full bg-[#00000066]">
+                          <p className='border-b-2 border-solid border-VerdeSolana-200'>Lvl</p>
+                          <div className="flex flex-row content-center text-2xl justify-center justify-items-center gap-1">
                             {currentLevel}
                           </div>
                         </div>
-                        <div>
-                          <div className="flex flex-col content-center justify-items-center bg-red-300 w-15 h-15  ">
-                            <p>Score</p>
-                            <div className="flex flex-row content-center  justify-center justify-items-center gap-1">
+                          <div className="flex flex-col justify-center p-[2px]   bg-[#00000066] w-15 h-full  ">
+                            <p className='border-b-2 border-solid border-VerdeSolana-200'>Score</p>
+                            <div className="flex flex-row content-center text-2xl justify-center justify-items-center gap-1">
                               {score}
                             </div>
                           </div>
-                        </div>
-                        <div>
-                          <div className="flex flex-col content-center bg-AmberSolana-400 w-15 h-15 ">
-                            <p>Rank</p>
+                        
+                          <div className="flex flex-col justify-center p-[2px] bg-[#00000066]  rounded-r-[20px] rounded-l-none w-15 h-full">
+                            <p className='border-b-2 border-solid border-VerdeSolana-200'>Rank</p>
                             <div className="inline-block">
                               {playerRank && (
-                                <div className="flex flex-row content-center  justify-center justify-items-center gap-1">
+                                <div className="flex flex-row content-center text-2xl justify-center justify-items-center gap-1">
                                   {playerRank.isInRanking ? (
-                                    <span className="text-VerdeSolana-200 font-medium">{playerRank.rank}</span>
+                                    <span className="font-bold ">{playerRank.rank}</span>
                                   ) : (
                                     <span className="text-gray-500">0</span>
                                   )}
@@ -274,7 +278,6 @@ export default function DashboardFeature() {
                               )}
                             </div>
                           </div>
-                        </div>
                       </div>
                     </div>
                     <div className="flex flex-row justify-around w-full rounded-b-3xl text-VerdeSolana-200 bg-[#00000080] sm:hidden">
@@ -337,15 +340,17 @@ export default function DashboardFeature() {
                     key={choice}
                     onClick={() => handlePlay(choice)}
                     disabled={buttonsDisabled}
-                    className="flex-1 px-2 py-2 bg-yellow-300 border-4 border-white btnsdc rounded-lg disabled:opacity-50"
+                    className="flex-1 px-2 py-2 bg-yellow-300 border-4 border-white -rotate-90 btnsdc rounded-lg w-[148px] disabled:opacity-50"
                   >
+                    <div className='w-[263px] overflow-hidden'>
                     <Image
                       src={`/hands/arms${['R', 'P', 'S'][choice]}L.svg`}
                       alt={['Rock', 'Paper', 'Scissors'][choice]}
-                      width={120}
+                      width={350}
                       height={120}
-                      className="mx-auto"
+                      className="mx-auto -translate-x-[54px] -translate-y-[8px]"
                     />
+                    </div>
                   </button>
                 ))}
               </div>
