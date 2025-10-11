@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import './globals.css'
 import { AppProviders } from '@/components/app-providers'
 import { AppLayout } from '@/components/app-layout'
-import {ChartLineIcon} from '@/components/ui/icon-move'
 import React from 'react'
 
 export const metadata: Metadata = {
@@ -16,6 +15,7 @@ const links: { label: string; path: string }[] = [
   { label: 'Account', path: '/account' },
   { label: 'Register', path: '/register'},
   { label: 'Market', path: '/market'},
+  { label: 'Tasks', path: '/tasks'},
   
 ]
 
